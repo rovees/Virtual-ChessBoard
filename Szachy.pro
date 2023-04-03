@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     Bishop.cpp \
+    Board.cpp \
     ChessBoard.cpp \
     King.cpp \
     Knight.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
 
 HEADERS += \
     Bishop.h \
+    Board.h \
     King.h \
     Knight.h \
     Pawn.h \
