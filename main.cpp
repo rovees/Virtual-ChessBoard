@@ -1,4 +1,4 @@
-#include "Board.h"
+#include "ChessBoardWindow.h"
 #include "Szachy.h"
 #include <QApplication>
 #include <QtWidgets>
@@ -38,8 +38,12 @@ private:
 int main(int argc, char** argv) {
 
     QApplication a(argc, argv);
-    Board b;
-    b.createChessboard();
+    QWidget *parent = nullptr;
+    // Szachy s(parent);
+    ChessBoardWindow b;
+    // b.movePiece();
+    // b.createChessboard();
+    b.resize(550, 550);
     b.show();
     return a.exec();
 }

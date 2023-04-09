@@ -1,11 +1,12 @@
-#include "logika.h"
+#include "Structures.h"
+#include "Rook.h"
 
 Rook::Rook(PieceType t, Color c) : Piece(t, c)
 {
 
 }
 
-void Rook::getType(PieceType type)
+PieceType Rook::getType(PieceType type)
 {
 
 }

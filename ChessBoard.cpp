@@ -1,5 +1,5 @@
-#include "Szachy.h"
-
+#include "ChessBoard.h"
+#include "Structures.h"
 
 ChessBoard::ChessBoard()
 {
@@ -15,6 +15,12 @@ Color ChessBoard::getTurn(Color turn)
 {
 
 }
+
+Position getToPos()
+{
+
+}
+
 // void setTurn();
 bool ChessBoard::makeMove(bool moveValid) // zwraca true jeżeli ruch został wykonany, w przeciwnym wypadku zwraca false
 {
@@ -31,4 +37,8 @@ void ChessBoard::getBoard(vector <vector<string>> board) // uaktualnianie stanu 
 
 }
 
+ChessBoard::~ChessBoard()
+{
+
+}
 

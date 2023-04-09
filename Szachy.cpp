@@ -50,6 +50,7 @@ ChessBoard::~ChessBoard()
 }
 */
 
+
 void Szachy::paintEvent()
 {
     int x=0,y=0;

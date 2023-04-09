@@ -1,4 +1,5 @@
-#include "logika.h"
+#include "Structures.h"
+#include "Pawn.h"
 
 
 Pawn::Pawn(PieceType t, Color c) : Piece(t, c)
@@ -6,7 +7,7 @@ Pawn::Pawn(PieceType t, Color c) : Piece(t, c)
 
 }
 
-void Pawn::getType(PieceType type)
+PieceType Pawn::getType(PieceType type)
 {
 
 }

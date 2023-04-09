@@ -1,11 +1,12 @@
-#include "logika.h"
+#include "Structures.h"
+#include "Bishop.h"
 
 Bishop::Bishop(PieceType t, Color c) : Piece(t, c)
 {
 
 }
 
-void Bishop::getType(PieceType type)
+PieceType Bishop::getType(PieceType type)
 {
 
 }

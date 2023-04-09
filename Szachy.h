@@ -8,7 +8,8 @@
 #include <QObject>
 #include <set>
 #include <QGraphicsPixmapItem>
-#include "logika.h"
+#include "Structures.h"
+#include "ChessBoardWindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Szachy; }
@@ -18,8 +19,9 @@ class Szachy : public QMainWindow
 {
     Q_OBJECT
 
-private:
+protected:
     Ui::Szachy *ui;
+    ChessBoardWindow b;
     QPushButton* buttons[8][8];
 
 public:
@@ -42,7 +44,7 @@ private:
 };
 */
 
-
+/*
 class CPieceIcon : public QGraphicsItem
 {
 public:
@@ -85,7 +87,7 @@ private:
     QPointF m_mousePos;
 };
 
-
+*/
 // implementacja szachownicy w gui
 //
 

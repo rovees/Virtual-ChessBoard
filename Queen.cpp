@@ -1,11 +1,12 @@
-#include "logika.h"
+#include "Structures.h"
+#include "Queen.h"
 
 Queen::Queen(PieceType t, Color c) : Piece(t, c)
 {
 
 }
 
-void Queen::getType(PieceType type)
+PieceType Queen::getType(PieceType type)
 {
 
 }

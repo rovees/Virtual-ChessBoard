@@ -1,11 +1,12 @@
-#include "logika.h"
+#include "Structures.h"
+#include "Knight.h"
 
 Knight::Knight(PieceType t, Color c) : Piece(t, c)
 {
 
 }
 
-void Knight::getType(PieceType type)
+PieceType Knight::getType(PieceType type)
 {
 
 }
@@ -28,8 +29,7 @@ Color Knight::getColor()
 bool Knight::isMoveValid()
 {
 
-};
-
+}
 
 Knight::~Knight()
 {

@@ -1,11 +1,12 @@
-#include "logika.h"
+#include "Structures.h"
+#include "King.h"
 
 King::King(PieceType t, Color c) : Piece(t, c)
 {
 
 }
 
-void King::getType(PieceType type)
+PieceType King::getType(PieceType type)
 {
 
 }

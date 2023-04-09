@@ -10,8 +10,9 @@ CONFIG += c++17
 
 SOURCES += \
     Bishop.cpp \
-    Board.cpp \
     ChessBoard.cpp \
+    ChessBoardWindow.cpp \
+    ChessGame.cpp \
     King.cpp \
     Knight.cpp \
     Pawn.cpp \
@@ -23,15 +24,24 @@ SOURCES += \
 
 HEADERS += \
     Bishop.h \
-    Board.h \
+    Bishop.h \
+    ChessBoard.h \
+    ChessBoardWindow.h \
+    ChessGame.h \
+    King.h \
     King.h \
     Knight.h \
+    Knight.h \
     Pawn.h \
+    Pawn.h \
+    Piece.h \
     Pieces.h \
     Queen.h \
+    Queen.h \
     Rook.h \
-    Szachy.h \
-    logika.h
+    Rook.h \
+    Structures.h \
+    Szachy.h
 
 FORMS += \
     Szachy.ui
