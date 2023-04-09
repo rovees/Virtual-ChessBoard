@@ -8,7 +8,7 @@ class Knight : public Piece
 {
 public:
     Knight(PieceType t, Color c);
-    virtual PieceType getType(PieceType type);
+    virtual PieceType getType();
     virtual void move(Position from, Position to);
     virtual Position getPosition();
     virtual Color getColor();

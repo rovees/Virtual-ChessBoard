@@ -6,9 +6,9 @@ Knight::Knight(PieceType t, Color c) : Piece(t, c)
 
 }
 
-PieceType Knight::getType(PieceType type)
+PieceType Knight::getType()
 {
-
+ return type;
 }
 
 void Knight::move(Position from, Position to)

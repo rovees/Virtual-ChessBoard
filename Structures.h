@@ -16,19 +16,19 @@ class Position
 
 enum PieceType
 {
-    Pawn,
-    Knight,
-    Bishop,
-    Rook,
-    Queen,
-    King,
-    Empty
+    PAWN,
+    KNIGHT,
+    BISHOP,
+    ROOK,
+    QUEEN,
+    KING,
+    EMPTY
 };
 
 enum Color
 {
-    White,
-    Black
+    WHITE,
+    BLACK
 };
 
 

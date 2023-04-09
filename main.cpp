@@ -2,6 +2,7 @@
 #include "Szachy.h"
 #include <QApplication>
 #include <QtWidgets>
+#include "Knight.h"
 
 /*
 class ChessBoard : public QWidget {
@@ -41,6 +42,10 @@ int main(int argc, char** argv) {
     QWidget *parent = nullptr;
     // Szachy s(parent);
     ChessBoardWindow b;
+    Knight kn(KNIGHT, BLACK);
+    Piece *ptr;
+    ptr = &kn;
+    cout << ptr->getType();
     // b.movePiece();
     // b.createChessboard();
     b.resize(550, 550);
