@@ -1,19 +1,17 @@
 #ifndef KNIGHT_H
 #define KNIGHT_H
 
-#include "Structures.h"
 #include "Piece.h"
 
-class Knight : public Piece
+class Knight:public Piece
 {
 public:
-    Knight(PieceType t, Color c);
-    virtual PieceType getType();
-    virtual void move(Position from, Position to);
-    virtual Position getPosition();
-    virtual Color getColor();
-    virtual bool isMoveValid();
+    Knight(QString team,QGraphicsItem *parent = 0);
     ~Knight();
+
+    void setImage();
+    void move();
+
 };
 
 #endif // KNIGHT_H

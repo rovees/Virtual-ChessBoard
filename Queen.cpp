@@ -1,37 +1,28 @@
-#include "Structures.h"
 #include "Queen.h"
+#include "Game.h"
 
-Queen::Queen(PieceType t, Color c) : Piece(t, c)
+extern Game *game;
+
+Queen::Queen(QString team,QGraphicsItem *parent) : Piece(team,parent)
 {
-
-}
-
-PieceType Queen::getType(PieceType type)
-{
-
-}
-
-void Queen::move(Position from, Position to)
-{
-
-}
-
-Position Queen::getPosition()
-{
-
-}
-
-Color Queen::getColor()
-{
-
-}
-
-bool Queen::isMoveValid()
-{
-
+    setImage();
 }
 
 Queen::~Queen()
+{
+
+}
+
+void Queen::setImage()
+{
+    if(side == "WHITE")
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/white_queen.png"));
+    else
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_queen.png"));
+}
+
+
+void Queen::move()
 {
 
 }

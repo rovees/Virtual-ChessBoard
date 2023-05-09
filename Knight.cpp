@@ -1,37 +1,30 @@
-#include "Structures.h"
 #include "Knight.h"
+#include "Game.h"
 
-Knight::Knight(PieceType t, Color c) : Piece(t, c)
+extern Game *game;
+
+Knight::Knight(QString team,QGraphicsItem *parent) : Piece(team,parent)
 {
-
-}
-
-PieceType Knight::getType()
-{
-
-}
-
-void Knight::move(Position from, Position to)
-{
-
-}
-
-Position Knight::getPosition()
-{
-
-}
-
-Color Knight::getColor()
-{
-
-}
-
-bool Knight::isMoveValid()
-{
-
+    setImage();
 }
 
 Knight::~Knight()
 {
+
+}
+
+void Knight::setImage()
+{
+    if(side == "WHITE")
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/white_knight.png"));
+    else
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_knight.png"));
+}
+
+
+
+void Knight::move()
+{
+
 
 }

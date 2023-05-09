@@ -1,44 +1,24 @@
+#include "ChessSquare.h"
 #include "ChessBoard.h"
-#include "Structures.h"
+#include "Game.h"
+#include "Queen.h"
+#include "Rook.h"
+#include "Pawn.h"
+#include "King.h"
+#include "Knight.h"
+#include "Bishop.h"
+
+extern Game *game;
 
 ChessBoard::ChessBoard()
 {
-
-}
-
-void ChessBoard::getPiece()
-{
-
-}
-
-Color ChessBoard::getTurn(Color turn)
-{
-
-}
-
-Position getToPos()
-{
-
-}
-
-// void setTurn();
-bool ChessBoard::makeMove(bool moveValid) // zwraca true jeżeli ruch został wykonany, w przeciwnym wypadku zwraca false
-{
-
-}
-
-bool ChessBoard::isFieldEmpty(Position pos) // funkcja sprawdzająca czy pole na szachownicy jest puste
-{
-
-}
-
-void ChessBoard::getBoard(vector <vector<string>> board) // uaktualnianie stanu szachownicy w trakcie partii
-{
-
+    setUpBlack();
+    setUpWhite();
 }
 
 ChessBoard::~ChessBoard()
 {
 
 }
+
 

@@ -1,37 +1,27 @@
-#include "Structures.h"
 #include "Rook.h"
+#include "Game.h"
 
-Rook::Rook(PieceType t, Color c) : Piece(t, c)
+extern Game *game;
+
+Rook::Rook(QString team,QGraphicsItem *parent) : Piece(team,parent)
 {
-
-}
-
-PieceType Rook::getType(PieceType type)
-{
-
-}
-
-void Rook::move(Position from, Position to)
-{
-
-}
-
-Position Rook::getPosition()
-{
-
-}
-
-Color Rook::getColor()
-{
-
-}
-
-bool Rook::isMoveValid()
-{
-
+    setImage();
 }
 
 Rook::~Rook()
+{
+
+}
+
+void Rook::setImage()
+{
+    if(side == "WHITE")
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/white_rook.png"));
+    else
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_rook.png"));
+}
+
+void Rook::move()
 {
 
 }

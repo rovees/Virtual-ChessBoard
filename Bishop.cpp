@@ -1,38 +1,30 @@
-#include "Structures.h"
 #include "Bishop.h"
+#include <QDebug>
+#include "Game.h"
 
-Bishop::Bishop(PieceType t, Color c) : Piece(t, c)
+extern Game *game;
+
+Bishop::Bishop(QString team,QGraphicsItem *parent) : Piece(team, parent)
 {
-
+    setImage();
 }
-
-PieceType Bishop::getType(PieceType type)
-{
-
-}
-
-void Bishop::move(Position from, Position to)
-{
-
-}
-
-Position Bishop::getPosition()
-{
-
-}
-
-Color Bishop::getColor()
-{
-
-}
-
-bool Bishop::isMoveValid()
-{
-
-}
-
 
 Bishop::~Bishop()
 {
 
 }
+
+void Bishop::setImage()
+{
+    if(side == "WHITE")
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/white_bishop.png"));
+    else
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_bishop.png"));
+}
+
+void Bishop::move()
+{
+
+}
+
+

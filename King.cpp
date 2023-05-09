@@ -1,37 +1,31 @@
-#include "Structures.h"
 #include "King.h"
+#include "Game.h"
+#include "Pawn.h"
 
-King::King(PieceType t, Color c) : Piece(t, c)
+extern Game *game;
+
+King::King(QString team,QGraphicsItem *parent) : Piece(team,parent)
 {
-
-}
-
-PieceType King::getType(PieceType type)
-{
-
-}
-
-void King::move(Position from, Position to)
-{
-
-}
-
-Position King::getPosition()
-{
-
-}
-
-Color King::getColor()
-{
-
-}
-
-bool King::isMoveValid()
-{
-
+    setImage();
 }
 
 King::~King()
 {
 
 }
+
+void King::setImage()
+{
+    if(side == "WHITE")
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/white_king.png"));
+    else
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_king.png"));
+}
+
+
+void King::move()
+{
+
+
+}
+

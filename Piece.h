@@ -11,7 +11,7 @@ class Piece:public QGraphicsPixmapItem
 {
 public:
     Piece(QString team = "", QGraphicsItem *parent = 0);
-
+    ~Piece();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void setCurrentBox(ChessSquare *box);
 

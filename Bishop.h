@@ -1,19 +1,19 @@
 #ifndef BISHOP_H
 #define BISHOP_H
-
-#include "Structures.h"
 #include "Piece.h"
-// XDDDDDDDDDDDDDDDDDDDDDDDDDDD
+#include "Game.h"
+
+
 class Bishop : public Piece
 {
 public:
-    Bishop(PieceType t, Color c);
-    virtual PieceType getType(PieceType type);
-    virtual void move(Position from, Position to);
-    virtual Position getPosition();
-    virtual Color getColor();
-    virtual bool isMoveValid();
+
+    Bishop(QString team, QGraphicsItem *parent = 0);
     ~Bishop();
+    void setImage();
+    void move();
+
 };
+
 
 #endif // BISHOP_H

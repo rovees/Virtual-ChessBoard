@@ -1,38 +1,35 @@
-#include "Structures.h"
 #include "Pawn.h"
+#include "Game.h"
+#include <QDebug>
+#include <typeinfo>
+#include "King.h"
 
+extern Game * game;
 
-Pawn::Pawn(PieceType t, Color c) : Piece(t, c)
+Pawn::Pawn(QString team,QGraphicsItem *parent) : Piece(team,parent)
 {
-
-}
-
-PieceType Pawn::getType(PieceType type)
-{
-
-}
-
-void Pawn::move(Position from, Position to)
-{
-
-}
-
-Position Pawn::getPosition()
-{
-
-}
-
-Color Pawn::getColor()
-{
-
-}
-
-bool Pawn::isMoveValid()
-{
-
+    setImage();
+    firstMove = true;
 }
 
 Pawn::~Pawn()
 {
 
 }
+
+void Pawn::setImage()
+{
+    if(side == "WHITE")
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/white_pawn.png"));
+    else
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_pawn.png"));
+}
+
+
+
+void Pawn::move()
+{
+
+
+}
+
