@@ -17,6 +17,7 @@ public:
 
     // metoda, która dodaje figurę na szachownicę
     void addChessPiece();
+    // resetowanie szachownicy
     void reset();
 private:
     // listy zawierające białe i czarne figury
