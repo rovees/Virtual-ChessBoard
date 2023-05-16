@@ -1,16 +1,16 @@
 #include "Game.h"
-#include "button.h"
+#include "Button.h"
 #include <QPixmap>
 #include "Bishop.h"
 #include <QDebug>
 
 Game::Game(QWidget *parent) : QGraphicsView(parent)
 {
-    // ustawienie sceny gry
+    //Making the Scene
     gameScene = new QGraphicsScene();
     gameScene->setSceneRect(0,0,0.8*1400,0.8*900);
 
-    // ustawienie widoku
+    //Making the view
     setFixedSize(0.8*1400,0.8*900);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -21,49 +21,23 @@ Game::Game(QWidget *parent) : QGraphicsView(parent)
     setBackgroundBrush(brush);
     pieceToMove = NULL;
 
-    // wyświetlanie tury
+    //display turn
     turnDisplay = new QGraphicsTextItem();
     turnDisplay->setPos(width()/2-0.8*100,0.8*10);
     turnDisplay->setZValue(1);
     turnDisplay->setDefaultTextColor(Qt::white);
     turnDisplay->setFont(QFont("",0.8*18));
     turnDisplay->setPlainText("Turn : WHITE");
-}
 
-void Game::addToScene(QGraphicsItem *item)
-{
-    gameScene->addItem(item);
-}
-
-void Game::removeFromScene(QGraphicsItem *item)
-{
-    gameScene->removeItem(item);
-
-}
-
-QString Game::getTurn()
-{
-    return turn;
-}
-
-void Game::setTurn(QString value)
-{
-    turn = value;
-}
-
-
-void Game::changeTurn()
-{
-    if(getTurn() == "WHITE")
-        setTurn("BLACK");
-    else
-        setTurn("WHITE");
-    turnDisplay->setPlainText("Turn : " + getTurn());
-}
-
-void Game::setTurnDisplay(QString value)
-{
-    turnDisplay->setPlainText(value);
+    // display Check
+    check = new QGraphicsTextItem();
+    check->setPos(width()/2-0.8*100,0.8*860);
+    check->setZValue(4);
+    check->setDefaultTextColor(Qt::red);
+    check->setFont(QFont("",0.8*18));
+    check->setPlainText("CHECK!");
+    check->setVisible(false);
+    setTurn("WHITE");
 }
 
 void Game::drawChessBoard()
@@ -72,34 +46,6 @@ void Game::drawChessBoard()
     drawDeadHolder(0,0,Qt::lightGray);
     drawDeadHolder(0.8*1100,0,Qt::lightGray);
     chess->drawBoxes(width()/2-0.8*400,0.8*50);
-
-}
-
-void Game::drawDeadHolder(int x, int y, QColor color)
-{
-    deadHolder = new QGraphicsRectItem(x, y, 0.8*300, 0.8*900);
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(color);
-    deadHolder->setBrush(brush);
-    addToScene(deadHolder);
-}
-
-
-void Game::placeInDeadPlace(Piece *piece)
-{
-    // umieszczenie zbitej figury w odpowiednim miejscu w zależności od koloru
-    if(piece->getSide() == "WHITE") {
-        whiteDead.append(piece);
-        displayDeadWhite();
-    }
-    else{
-        blackDead.append(piece);
-        displayDeadBlack();
-    }
-
-    // usunięcie zbitej figury z listy żywych figur
-    alivePiece.removeAll(piece);
 
 }
 
@@ -133,6 +79,56 @@ void Game::displayDeadBlack()
     }
 }
 
+void Game::placeInDeadPlace(Piece *piece)
+{
+    // umieszczenie zbitej figury w odpowiednim miejscu w zależności od koloru
+    if(piece->getSide() == "WHITE") {
+        whiteDead.append(piece);
+        displayDeadWhite();
+    }
+    else{
+        blackDead.append(piece);
+        displayDeadBlack();
+    }
+
+    // usunięcie zbitej figury z listy żywych figur
+    alivePiece.removeAll(piece);
+
+}
+
+void Game::addToScene(QGraphicsItem *item)
+{
+    qDebug() << item;
+
+    gameScene->addItem(item);
+}
+
+void Game::removeFromScene(QGraphicsItem *item)
+{
+    gameScene->removeItem(item);
+
+}
+
+QString Game::getTurn()
+{
+    return turn;
+}
+
+void Game::setTurn(QString value)
+{
+    turn = value;
+}
+
+
+void Game::changeTurn()
+{
+    if(getTurn() == "WHITE")
+        setTurn("BLACK");
+    else
+        setTurn("WHITE");
+    turnDisplay->setPlainText("Turn : " + getTurn());
+}
+
 void Game::start()
 {
     for(size_t i = 0, n = listG.size(); i < n; i++)
@@ -158,23 +154,34 @@ void Game::start()
     chess->addChessPiece();
 }
 
+void Game::drawDeadHolder(int x, int y, QColor color)
+{
+    deadHolder = new QGraphicsRectItem(x, y, 0.8*300, 0.8*900);
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(color);
+    deadHolder->setBrush(brush);
+    addToScene(deadHolder);
+}
+
 void Game::displayMainMenu()
 {
+
     QGraphicsPixmapItem *p = new QGraphicsPixmapItem();
-    p->setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/white_king"));
+    p->setPixmap(QPixmap(":/images/white_king.png"));
     p->setPos(0.8*420,0.8*170);
     addToScene(p);
     listG.append(p);
 
     QGraphicsPixmapItem *p1 = new QGraphicsPixmapItem();
-    p1->setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_king"));
+    p1->setPixmap(QPixmap(":/images/black_king.png"));
     p1->setPos(0.8*920,0.8*170);
     addToScene(p1);
     listG.append(p1);
 
     // utworzenie tytułu
     QGraphicsTextItem *titleText = new QGraphicsTextItem("Chess");
-    QFont titleFont("arial" , 0.8*50);
+    QFont titleFont("arial", 0.8*50);
     titleText->setFont(titleFont);
     int xPos = width()/2 - titleText->boundingRect().width()/2;
     int yPos = 0.8*150;
@@ -187,7 +194,7 @@ void Game::displayMainMenu()
     int pxPos = width()/2 - playButton->boundingRect().width()/2;
     int pyPos = 0.8*300;
     playButton->setPos(pxPos,pyPos);
-    connect(playButton, SIGNAL(clicked()) , this , SLOT(start()));
+    connect(playButton, SIGNAL(clicked()) , this, SLOT(start()));
     addToScene(playButton);
     listG.append(playButton);
 
@@ -195,11 +202,22 @@ void Game::displayMainMenu()
     Button * quitButton = new Button("Quit");
     int qxPos = width()/2 - quitButton->boundingRect().width()/2;
     int qyPos = 0.8*375;
-    quitButton->setPos(qxPos,qyPos);
-    connect(quitButton, SIGNAL(clicked()),this,SLOT(close()));
+    quitButton->setPos(qxPos, qyPos);
+    connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
     addToScene(quitButton);
     drawChessBoard();
     listG.append(quitButton);
 }
 
+void Game::setTurnDisplay(QString value)
+{
+    turnDisplay->setPlainText(value);
+}
 
+void Game::removeAll(){
+    QList<QGraphicsItem*> itemsList = gameScene->items();
+    for(size_t i = 0, n = itemsList.size();i<n;i++) {
+        // if(itemsList[i] != check)
+        removeFromScene(itemsList[i]);
+    }
+}

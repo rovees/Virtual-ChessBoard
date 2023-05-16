@@ -22,6 +22,7 @@ void Bishop::setImage()
         setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_bishop.png"));
 }
 
+
 void Bishop::move()
 {
     location.clear();
@@ -30,8 +31,7 @@ void Bishop::move()
     QString team = this->getSide();
 
     // ruch w góre w lewo
-
-    for(int i = row-1, j=col-1; i >= 0 && j >= 0; i--, j--) {
+    for(int i = row - 1, j=col - 1; i >= 0 && j >= 0; i--, j--) {
 
         if(game->collection[i][j]->getChessPieceColor() == team ) {
             break;
@@ -48,8 +48,7 @@ void Bishop::move()
     }
 
     // ruch w góre w prawo
-
-    for(int i = row-1,j = col+1; i >= 0 && j <= 7; i--,j++) {
+    for(int i = row - 1,j = col + 1; i >= 0 && j <= 7; i--,j++) {
         if(game->collection[i][j]->getChessPieceColor() == team ) {
             break;
 
@@ -64,8 +63,7 @@ void Bishop::move()
     }
 
     // ruch w dół w prawo
-
-    for(int i = row+1, j = col+1; i <= 7 && j <= 7; i++ ,j++) {
+    for(int i = row + 1, j = col + 1; i <= 7 && j <= 7; i++ ,j++) {
         if(game->collection[i][j]->getChessPieceColor() == team ) {
             break;
 
@@ -80,8 +78,7 @@ void Bishop::move()
     }
 
     // ruch w dół w lewo
-
-    for(int i = row+1, j = col-1; i <= 7 && j >= 0; i++, j--) {
+    for(int i = row + 1, j = col - 1; i <= 7 && j >= 0; i++, j--) {
         if(game->collection[i][j]->getChessPieceColor() == team ) {
             break;
 
@@ -97,5 +94,4 @@ void Bishop::move()
     }
 
 }
-
 
