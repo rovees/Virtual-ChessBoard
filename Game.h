@@ -12,7 +12,7 @@ public:
     //Constructors
     Game(QWidget *parent = 0);
 
-    /* metoda tworząca obszar, w którym będą wyświetlane figury (odpowiedniego kolory), które zostały zbite*/
+    /* metoda tworząca obszar, w którym będą wyświetlane figury (odpowiedniego koloru), które zostały zbite*/
     void drawDeadHolder(int x, int y, QColor color);
     /* metoda rysująca szachownicę */
     void drawChessBoard();

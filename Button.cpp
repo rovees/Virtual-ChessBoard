@@ -25,14 +25,28 @@ Button::Button(QString name, QGraphicsItem *parent)
 
 void Button::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-
+    if(event)
+     emit clicked();
 }
 
 void Button::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-
+    // zmiana koloru przycisku przy najeżdżaniu kursorem
+    if(event){
+     QBrush brush;
+     brush.setStyle(Qt::SolidPattern);
+     brush.setColor(Qt::red);
+     setBrush(brush);
+    }
 }
+
 void Button::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-
+    // zmiana koloru przycisku przy zjeżdzaniu z niego kursorem
+    if(event){
+     QBrush brush;
+     brush.setStyle(Qt::SolidPattern);
+     brush.setColor(Qt::darkRed);
+     setBrush(brush);
+    }
 }
