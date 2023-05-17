@@ -71,12 +71,65 @@ void ChessSquare::mousePressEvent(QGraphicsSceneMouseEvent *event)
         game->pieceToMove = NULL;
         // zmiana tury
         game->changeTurn();
-        // checkForCheck();
+        // sprawdzenie czy jest szach
+        checkForCheck();
     }
     //Selecting couterpart of the chessPiece
     else if(this->getHasChessPiece())
     {
         this->currentPiece->mousePressEvent(event);
+    }
+}
+
+void ChessSquare::checkForCheck()
+{
+    // czy został obsłużony szach
+    int c = 0;
+    // lista wszystkich figur na szachownicy
+    QList <Piece *> pList = game->alivePiece;
+    // iteracja przez żywe figury na szachownicy
+    for(size_t i = 0, n = pList.size(); i < n; i++ ) {
+    // rzutowanie aktualnej figury na króla
+        King * p = dynamic_cast <King *> (pList[i]);
+        // jezeli figura jest królem to przeskakujemy do następnego kroku pętli
+        if(p){
+            continue;
+        }
+        pList[i]->move();
+        pList[i]->decolor();
+        // lista pól w które można się przesunąć daną figurą
+        QList <ChessSquare *> bList = pList[i]->moveLocation();
+        // iteracja przez pola, w które możemy się poruszyć daną figurą znajdującą się na polu bList
+        for(size_t j = 0, n = bList.size(); j < n; j++) {
+            // rzutowanie figury stojącej na danym polu szachowym na Króla
+            King * p = dynamic_cast<King *> (bList[j]->currentPiece);
+
+            if(p) {
+                /*jezeli figura znajdująca się na polu bList jest Królem i jest tego samego koloru co figura z listy pList, którą przesuwamy to
+                 przeskakujemy do następnego kroku pętli */
+                if(p->getSide() == pList[i]->getSide())
+                    continue;
+                bList[j]->setColor(Qt::darkRed);
+                if(!game->check->isVisible())
+                    game->check->setVisible(true);
+                else{
+                    bList[j]->resetOriginalColor();
+                    pList[i]->getCurrentBox()->resetOriginalColor();
+                    // game->gameOver();
+                }
+                c++;
+
+            }
+        }
+
+
+    }
+
+    // jesli nie ma szacha to resetujemy kolory pól wszystkich figur na szachownicy
+    if(!c){
+        game->check->setVisible(false);
+        for(size_t i = 0, n = pList.size(); i < n; i++ )
+            pList[i]->getCurrentBox()->resetOriginalColor();
     }
 }
 

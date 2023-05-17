@@ -165,6 +165,7 @@ void Game::drawDeadHolder(int x, int y, QColor color)
     addToScene(deadHolder);
 }
 
+
 void Game::displayMainMenu()
 {
 

@@ -6,7 +6,7 @@
 
 extern Game * game;
 
-Pawn::Pawn(QString team,QGraphicsItem *parent) : Piece(team,parent)
+Pawn::Pawn(QString team, QGraphicsItem *parent) : Piece(team, parent)
 {
     setImage();
     firstMove = true;
@@ -20,9 +20,9 @@ Pawn::~Pawn()
 void Pawn::setImage()
 {
     if(side == "WHITE")
-        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/white_pawn.png"));
+        setPixmap(QPixmap("C:/Users/Radek/Documents/SZASZKI/white_pawn.png"));
     else
-        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_pawn.png"));
+        setPixmap(QPixmap("C:/Users/Radek/Documents/SZASZKI/black_pawn.png"));
 }
 
 
@@ -54,11 +54,11 @@ void Pawn::move()
 
     }
     else{
-        if(col > 0 && row < 7 && game->collection[row+1][col-1]->getChessPieceColor() == "WHITE") { //left
+        if(col > 0 && row < 7 && game->collection[row+1][col-1]->getChessPieceColor() == "WHITE") {
             location.append(game->collection[row+1][col-1]);
             boxSetting(location.last());
         }
-        if(col < 7 && row <  7 && game->collection[row+1][col+1]->getChessPieceColor() == "WHITE") { //right
+        if(col < 7 && row <  7 && game->collection[row+1][col+1]->getChessPieceColor() == "WHITE") {
             location.append(game->collection[row+1][col+1]);
             boxSetting(location.last());
         }
