@@ -1,16 +1,16 @@
 #include "Game.h"
 #include "Button.h"
 #include <QPixmap>
-#include "Bishop.h"
+#include "King.h"
 #include <QDebug>
 
 Game::Game(QWidget *parent) : QGraphicsView(parent)
 {
-    //Making the Scene
+    // utworzenie sceny
     gameScene = new QGraphicsScene();
     gameScene->setSceneRect(0,0,0.8*1400,0.8*900);
 
-    //Making the view
+    // utworzenie widoku
     setFixedSize(0.8*1400,0.8*900);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -19,9 +19,9 @@ Game::Game(QWidget *parent) : QGraphicsView(parent)
     brush.setStyle(Qt::SolidPattern);
     brush.setColor(Qt::black);
     setBackgroundBrush(brush);
-    pieceToMove = NULL;
+    pieceToMove = nullptr;
 
-    //display turn
+    // wyswietlanie aktualnej tury
     turnDisplay = new QGraphicsTextItem();
     turnDisplay->setPos(width()/2-0.8*100,0.8*10);
     turnDisplay->setZValue(1);
@@ -29,7 +29,7 @@ Game::Game(QWidget *parent) : QGraphicsView(parent)
     turnDisplay->setFont(QFont("",0.8*18));
     turnDisplay->setPlainText("Turn : WHITE");
 
-    // display Check
+    // wyświetlanie informacji czy jest szach szacha
     check = new QGraphicsTextItem();
     check->setPos(width()/2-0.8*100,0.8*860);
     check->setZValue(4);
@@ -51,7 +51,7 @@ void Game::drawChessBoard()
 
 void Game::displayDeadWhite()
 {
-    int shift = 0.8*50;
+    int SHIFT = 0.8*50;
     int j = 0;
     int k = 0;
     for(size_t i = 0, n = whiteDead.size(); i < n; i++) {
@@ -60,13 +60,13 @@ void Game::displayDeadWhite()
             j = 0;
         }
         j++;
-        whiteDead[i]->setPos(0.8*40+shift*j,0.8*100+shift*2*k);
+        whiteDead[i]->setPos(0.8*40+SHIFT*j,0.8*100+SHIFT*2*k);
     }
 }
 
 void Game::displayDeadBlack()
 {
-    int shift = 0.8*50;
+    int SHIFT = 0.8*50;
     int j = 0;
     int k = 0;
     for(size_t i = 0, n = blackDead.size(); i<n; i++) {
@@ -75,12 +75,13 @@ void Game::displayDeadBlack()
             j = 0;
         }
         j++;
-        blackDead[i]->setPos(0.8*1140+shift*j,0.8*100+shift*2*k);
+        blackDead[i]->setPos(0.8*1140+SHIFT*j,0.8*100+SHIFT*2*k);
     }
 }
 
 void Game::placeInDeadPlace(Piece *piece)
 {
+
     // umieszczenie zbitej figury w odpowiednim miejscu w zależności od koloru
     if(piece->getSide() == "WHITE") {
         whiteDead.append(piece);
@@ -93,8 +94,8 @@ void Game::placeInDeadPlace(Piece *piece)
 
     // usunięcie zbitej figury z listy żywych figur
     alivePiece.removeAll(piece);
-
 }
+
 
 void Game::addToScene(QGraphicsItem *item)
 {
@@ -221,3 +222,5 @@ void Game::removeAll(){
         removeFromScene(itemsList[i]);
     }
 }
+
+
