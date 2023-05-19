@@ -18,7 +18,30 @@ Piece::~Piece()
 
 void Piece::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    // odznaczanie wybranej figury
+    if(this == game->getPieceToMove()){
+        game->getPieceToMove()->getCurrentBox()->resetOriginalColor();
+        game->getPieceToMove()->decolor();
+        game->setPieceToMove(nullptr);
+        return;
+    }
 
+    // jeżeli figura została zbita oraz zapobieganie możliwości poruszania się figurą, której kolor nie odpowiada aktualnej turze
+    if((!getIsPlaced()) || ((game->getTurn() != this->getSide()) && (!game->getPieceToMove())))
+        return;
+
+    // wybranie danej figury
+    if(!game->getPieceToMove()){
+
+        game->setPieceToMove(this);
+        game->getPieceToMove()->getCurrentBox()->setColor(Qt::green);
+        game->getPieceToMove()->move();
+    }
+    /* game->pieceToMove - to figura którą chcemy przesunąć, a 'this' to figura na którą aktualnie klikamy, jest to po prostu
+    mechanizm bicia, stąd kolory tych dwóch figur muszą być różne */
+    else if(this->getSide() != game->getPieceToMove()->getSide()){
+        this->getCurrentBox()->mousePressEvent(event);
+    }
 }
 
 void Piece::setCurrentBox(ChessSquare *box)
@@ -63,11 +86,21 @@ void Piece::decolor()
     }
 }
 
+void Piece::setFirstMove(bool value)
+{
+    firstMove = value;
+}
+
+bool Piece::getFirstMove()
+{
+    return firstMove;
+}
+
 bool Piece::boxSetting(ChessSquare *box)
 
 {
     if(box->getHasChessPiece()) {
-        King *q = dynamic_cast<King*>(location.last()->currentPiece);
+        King *q = dynamic_cast<King*>(location.last()->getCurrentPiece());
         if(q){
             box->setColor(Qt::blue);
         }

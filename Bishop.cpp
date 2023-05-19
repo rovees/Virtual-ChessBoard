@@ -26,20 +26,20 @@ void Bishop::setImage()
 void Bishop::move()
 {
     location.clear();
-    int row = this->getCurrentBox()->rowPos;
-    int col = this->getCurrentBox()->colPos;
+    int row = this->getCurrentBox()->getRowPos();
+    int col = this->getCurrentBox()->getColPos();
     QString team = this->getSide();
 
     // ruch w góre w lewo
     for(int i = row - 1, j=col - 1; i >= 0 && j >= 0; i--, j--) {
 
-        if(game->collection[i][j]->getChessPieceColor() == team ) {
+        if(game->getCollection(i, j)->getChessPieceColor() == team ) {
             break;
 
         }
         else
         {
-            location.append(game->collection[i][j]);
+            location.append(game->getCollection(i, j));
 
             if(boxSetting(location.last()) ){
                 break;
@@ -49,13 +49,13 @@ void Bishop::move()
 
     // ruch w góre w prawo
     for(int i = row - 1,j = col + 1; i >= 0 && j <= 7; i--,j++) {
-        if(game->collection[i][j]->getChessPieceColor() == team ) {
+        if(game->getCollection(i, j)->getChessPieceColor() == team ) {
             break;
 
         }
         else
         {
-            location.append(game->collection[i][j]);
+            location.append(game->getCollection(i, j));
             if(boxSetting(location.last())){
                 break;
             }
@@ -64,13 +64,13 @@ void Bishop::move()
 
     // ruch w dół w prawo
     for(int i = row + 1, j = col + 1; i <= 7 && j <= 7; i++ ,j++) {
-        if(game->collection[i][j]->getChessPieceColor() == team ) {
+        if(game->getCollection(i, j)->getChessPieceColor() == team ) {
             break;
 
         }
         else
         {
-            location.append(game->collection[i][j]);
+            location.append(game->getCollection(i, j));
             if(boxSetting(location.last())){
                 break;
             }
@@ -79,13 +79,13 @@ void Bishop::move()
 
     // ruch w dół w lewo
     for(int i = row + 1, j = col - 1; i <= 7 && j >= 0; i++, j--) {
-        if(game->collection[i][j]->getChessPieceColor() == team ) {
+        if(game->getCollection(i, j)->getChessPieceColor() == team ) {
             break;
 
         }
         else
         {
-            location.append(game->collection[i][j]);
+            location.append(game->getCollection(i, j));
             if(boxSetting(location.last())){
                 break;
             }

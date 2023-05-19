@@ -26,19 +26,19 @@ void ChessSquare::mousePressEvent(QGraphicsSceneMouseEvent *event)
     qDebug() << getChessPieceColor();
     /* sprawdzenie czy kliknięta figura jest już wybraną figurą, dodatkowo zabezpieczamy się przed błędami wynikającymi z sytuacji, kiedy
     currentPiece miałoby wartość null*/
-    if(currentPiece == game->pieceToMove && currentPiece){
+    if(currentPiece == game->getPieceToMove() && currentPiece){
 
         currentPiece->mousePressEvent(event);
         return;
     }
 
     // jeżeli wybrano figurę
-    if(game->pieceToMove){
+    if(game->getPieceToMove()){
         // jeżeli klikniemy na figurę tego samego koloru to nic dalej nie jest wykonywane
-        if(this->getChessPieceColor() == game->pieceToMove->getSide())
+        if(this->getChessPieceColor() == game->getPieceToMove()->getSide())
             return;
 
-        QList <ChessSquare *> movLoc = game->pieceToMove->moveLocation();
+        QList <ChessSquare *> movLoc = game->getPieceToMove()->moveLocation();
         // sprawdzenie czy wybrane pole należy do listy możliwych ruchów dla danej figury
         int check = 0;
         for(size_t i = 0, n = movLoc.size(); i < n; i++) {
@@ -51,9 +51,9 @@ void ChessSquare::mousePressEvent(QGraphicsSceneMouseEvent *event)
         if(check == 0)
             return;
         // przywrócenie oryginalnych kolorów pól
-        game->pieceToMove->decolor();
+        game->getPieceToMove()->decolor();
         // ustawienie atrybutu firstMove (tylko dla pionka, jeżeli został nim wykonany pierwszy ruch)
-        game->pieceToMove->firstMove = false;
+        game->getPieceToMove()->setFirstMove(false);
         // ruch w pole na którym znajduje się figura przeciwnika (bicie) i umieszczenie zbitej figury do obszaru zbitych figur
         if(this->getHasChessPiece()){
             this->currentPiece->setIsPlaced(false);
@@ -62,13 +62,13 @@ void ChessSquare::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
         }
         // resetowanie pola, na którym znajdowała się figura
-        game->pieceToMove->getCurrentBox()->setHasChessPiece(false);
-        game->pieceToMove->getCurrentBox()->currentPiece = NULL;
-        game->pieceToMove->getCurrentBox()->resetOriginalColor();
+        game->getPieceToMove()->getCurrentBox()->setHasChessPiece(false);
+        game->getPieceToMove()->getCurrentBox()->currentPiece = NULL;
+        game->getPieceToMove()->getCurrentBox()->resetOriginalColor();
         // ustawienie figury na nowym polu
-        placePiece(game->pieceToMove);
+        placePiece(game->getPieceToMove());
 
-        game->pieceToMove = NULL;
+        game->setPieceToMove(nullptr);
         // zmiana tury
         game->changeTurn();
         // sprawdzenie czy jest szach
@@ -86,7 +86,7 @@ void ChessSquare::checkForCheck()
     // czy został obsłużony szach
     int c = 0;
     // lista wszystkich figur na szachownicy
-    QList <Piece *> pList = game->alivePiece;
+    QList <Piece *> pList = game->getAlivePiece();
     // iteracja przez żywe figury na szachownicy
     for(size_t i = 0, n = pList.size(); i < n; i++ ) {
     // rzutowanie aktualnej figury na króla
@@ -110,8 +110,8 @@ void ChessSquare::checkForCheck()
                 if(p->getSide() == pList[i]->getSide())
                     continue;
                 bList[j]->setColor(Qt::darkRed);
-                if(!game->check->isVisible())
-                    game->check->setVisible(true);
+                if(!game->getCheck()->isVisible())
+                    game->getCheck()->setVisible(true);
                 else{
                     bList[j]->resetOriginalColor();
                     pList[i]->getCurrentBox()->resetOriginalColor();
@@ -127,7 +127,7 @@ void ChessSquare::checkForCheck()
 
     // jesli nie ma szacha to resetujemy kolory pól wszystkich figur na szachownicy
     if(!c){
-        game->check->setVisible(false);
+        game->getCheck()->setVisible(false);
         for(size_t i = 0, n = pList.size(); i < n; i++ )
             pList[i]->getCurrentBox()->resetOriginalColor();
     }
@@ -137,6 +137,36 @@ void ChessSquare::setColor(QColor color)
 {
     brush.setColor(color);
     setBrush(color);
+}
+
+void ChessSquare::setCurrentPiece(Piece *p)
+{
+    currentPiece = p;
+}
+
+Piece *ChessSquare::getCurrentPiece()
+{
+    return currentPiece;
+}
+
+void ChessSquare::setRowPos(int row)
+{
+    rowPos = row;
+}
+
+int ChessSquare::getRowPos()
+{
+    return rowPos;
+}
+
+void ChessSquare::setColPos(int col)
+{
+    colPos = col;
+}
+
+int ChessSquare::getColPos()
+{
+    return colPos;
 }
 
 void ChessSquare::placePiece(Piece *piece)

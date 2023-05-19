@@ -27,83 +27,85 @@ void King::move()
 {
 
     location.clear();
-    int row = this->getCurrentBox()->rowPos;
-    int col = this->getCurrentBox()->colPos;
+    int row = this->getCurrentBox()->getRowPos();
+    int col = this->getCurrentBox()->getColPos();
     QString team = this->getSide();
 
     // góra lewo
-    if(col > 0 && row > 0 && !(game->collection[row-1][col-1]->getChessPieceColor() == team)) {
-        location.append(game->collection[row-1][col-1]);
-        game->collection[row-1][col-1]->setColor(Qt::darkGreen);
+    if(col > 0 && row > 0 && !(game->getCollection(row-1, col-1)->getChessPieceColor() == team)) {
+        location.append(game->getCollection(row-1, col-1));
+        game->getCollection(row-1, col-1)->setColor(Qt::darkGreen);
         if(location.last()->getHasChessPiece()){
             location.last()->setColor(Qt::green);
         }
     }
 
     // góra prawo
-    if(col < 7 && row > 0 && !(game->collection[row-1][col+1]->getChessPieceColor() == team)) {
-        location.append(game->collection[row-1][col+1]);
-        game->collection[row-1][col+1]->setColor(Qt::darkGreen);
+    if(col < 7 && row > 0 && !(game->getCollection(row-1, col+1)->getChessPieceColor() == team)) {
+        location.append(game->getCollection(row-1, col+1));
+        game->getCollection(row-1, col+1)->setColor(Qt::darkGreen);
         if(location.last()->getHasChessPiece()){
             location.last()->setColor(Qt::green);
         }
     }
 
-    // w górę
-    if(row>0 && !(game->collection[row-1][col]->getChessPieceColor() == team)) {
-        location.append(game->collection[row-1][col]);
-        game->collection[row-1][col]->setColor(Qt::darkGreen);
+    // góra
+    if(row>0 && !(game->getCollection(row-1, col)->getChessPieceColor() == team)) {
+        location.append(game->getCollection(row-1, col));
+        game->getCollection(row-1, col)->setColor(Qt::darkGreen);
         if(location.last()->getHasChessPiece()){
             location.last()->setColor(Qt::green);
         }
     }
 
-    // w dół
-    if(row<7 && !(game->collection[row+1][col]->getChessPieceColor() == team)) {
-        location.append(game->collection[row+1][col]);
-        game->collection[row+1][col]->setColor(Qt::darkGreen);
+    // dół
+    if(row<7 && !(game->getCollection(row+1, col)->getChessPieceColor() == team)) {
+        location.append(game->getCollection(row+1, col));
+        game->getCollection(row+1, col)->setColor(Qt::darkGreen);
         if(location.last()->getHasChessPiece()){
             location.last()->setColor(Qt::green);
         }
     }
 
     // lewo
-    if(col>0 && !(game->collection[row][col-1]->getChessPieceColor() == team)) {
-        location.append(game->collection[row][col-1]);
-        game->collection[row][col-1]->setColor(Qt::darkGreen);
+    if(col>0 && !(game->getCollection(row, col-1)->getChessPieceColor() == team)) {
+        location.append(game->getCollection(row, col-1));
+        game->getCollection(row, col-1)->setColor(Qt::darkGreen);
         if(location.last()->getHasChessPiece()){
             location.last()->setColor(Qt::green);
         }
     }
 
     // prawo
-    if(col<7 && !(game->collection[row][col+1]->getChessPieceColor() == team)) {
-        location.append(game->collection[row][col+1]);
-        game->collection[row][col+1]->setColor(Qt::darkGreen);
+    if(col<7 && !(game->getCollection(row, col+1)->getChessPieceColor() == team)) {
+        location.append(game->getCollection(row, col+1));
+        game->getCollection(row, col+1)->setColor(Qt::darkGreen);
+
         if(location.last()->getHasChessPiece()){
             location.last()->setColor(Qt::green);
         }
     }
 
     // dół lewo
-    if(col > 0 && row < 7  && !(game->collection[row+1][col-1]->getChessPieceColor() == team)) {
-        location.append(game->collection[row+1][col-1]);
-        game->collection[row+1][col-1]->setColor(Qt::darkGreen);
+    if(col > 0 && row < 7  && !(game->getCollection(row+1, col-1)->getChessPieceColor() == team)) {
+        location.append(game->getCollection(row+1, col-1));
+        game->getCollection(row+1, col-1)->setColor(Qt::darkGreen);
         if(location.last()->getHasChessPiece()){
             location.last()->setColor(Qt::green);
         }
     }
 
     // dół prawo
-    if(col < 7 && row < 7 && !(game->collection[row+1][col+1]->getChessPieceColor() == team)) {
-        location.append(game->collection[row+1][col+1]);
-        game->collection[row+1][col+1]->setColor(Qt::darkGreen);
+    if(col < 7 && row < 7 && !(game->getCollection(row+1, col+1)->getChessPieceColor() == team)) {
+        location.append(game->getCollection(row+1, col+1));
+        game->getCollection(row+1, col+1)->setColor(Qt::darkGreen);
         if(location.last()->getHasChessPiece()){
             location.last()->setColor(Qt::green);
         }
     }
 
-   findUnSafeLocation();
+
+    findUnSafeLocation();
 
 
 }
@@ -111,7 +113,7 @@ void King::move()
 
 
 void King::findUnSafeLocation() {
-   QList <Piece *> pList = game->alivePiece;
+   QList <Piece *> pList = game->getAlivePiece();
    for(size_t i = 0,n = pList.size(); i < n; i++) {
 
         if(pList[i]->getSide() != this->getSide())

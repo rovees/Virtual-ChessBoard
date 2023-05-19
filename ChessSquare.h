@@ -11,12 +11,11 @@ class ChessSquare : public QGraphicsRectItem
 {
 public:
 
-    //Constructor
-    ChessSquare(QGraphicsItem *parent=0);
+    ChessSquare(QGraphicsItem *parent = 0);
     ~ChessSquare();
 
 
-    //public member function
+    // zdarzenie kliknięcia myszą
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
     /* ustawienie koloru pola szachowego*/
@@ -28,25 +27,37 @@ public:
     void resetOriginalColor(); // metoda resetująca kolor pola szachowego na kolor oryginalny
     void setOriginalColor(QColor value);
 
-    // gettery i settery atrybutu hasChessPiece
+    // gettery i settery odpowiednich atrybutów
     bool getHasChessPiece();
     void setHasChessPiece(bool value, Piece *piece = 0);
 
-    void checkForCheck();
+    int getRowPos();
+    void setRowPos(int row);
 
-    // getter i setter atrybutu chessPieceColor
+    int getColPos();
+    void setColPos(int col);
+
+    Piece *getCurrentPiece();
+    void setCurrentPiece(Piece *p);
+
     QString getChessPieceColor() ;
     void setChessPieceColor(QString value);
 
-    // atrybuty przechowujące informacje o położeniu pola szachowego na szachownicy
-    int rowPos;
-    int colPos;
+    // sprawdzanie czy jest szach
+    void checkForCheck();
+    void gameOver();
+    // int rowPos;
+    // int colPos;
 
-    Piece * currentPiece; // wskaźnik na aktualną figurę szachową
+    // Piece * currentPiece; // wskaźnik na aktualną figurę szachową znajdującą się na danym polu szachowym
 
 private:
     QBrush brush;
     QColor originalColor; // oryginalny kolor pola szachowego
+    // atrybuty przechowujące informacje o położeniu pola szachowego na szachownicy
+    int rowPos;
+    int colPos;
+    Piece * currentPiece; // wskaźnik na aktualną figurę szachową znajdującą się na danym polu szachowym
     bool hasChessPiece; // atrybut informujący czy na danym polu szachowym znajduje się jakaś figura
     QString chessPieceColor; // atrybut określający kolor figury znajdującej się na danym polu szachowym
 

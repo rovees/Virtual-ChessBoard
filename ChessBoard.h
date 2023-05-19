@@ -24,7 +24,6 @@ private:
     QList <Piece *> white;
     QList <Piece *> black;
 
-
 };
 
 #endif // CHESSBOARD_H

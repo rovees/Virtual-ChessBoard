@@ -5,7 +5,18 @@
 #include "ChessSquare.h"
 #include <QGraphicsSceneMouseEvent>
 
-class ChessSquare;
+//class ChessSquare;
+
+/*
+class PieceGraphicsIcon
+{
+
+public:
+    virtual void SetImage();
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
+};
+*/
 
 class Piece:public QGraphicsPixmapItem
 {
@@ -15,6 +26,7 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void setCurrentBox(ChessSquare *box);
 
+    // PieceGraphicsIcon pieceIcon;
     ChessSquare *getCurrentBox(); // położenie figury na szachownicy odpowiada położeniu pola, na którym stoi w danym momencie figura
 
     QString getSide(); // pobranie strony (koloru: biały lub czarny) dla danej figury
@@ -28,16 +40,18 @@ public:
     virtual void move() = 0; // funkcja wirtualna realizująca odpowiedni ruch w zależności od danej figury szachowej
     void decolor();
 
-    bool firstMove; // zmienna informująca czy aktualnie jest pierwszy ruch w partii czy nie
+    // bool firstMove; // zmienna informująca czy aktualnie jest pierwszy ruch w partii czy nie
+    void setFirstMove(bool value);
+    bool getFirstMove();
 
     bool boxSetting(ChessSquare *box); // ustawienie figury na polu wynikającym z ruchu w zależności czy to pole jest puste czy nie
 
 protected:
-    ChessSquare *currentBox;
-    QString side; // zmienna przechowująca stronę (kolor: biały lub czarny)
-    bool isPlaced; // zmienna informująca czy figura została ustawiona na danym pol
+    ChessSquare *currentBox; // wskaźnik na aktualne pole szachowe
+    QString side; // atrybut przechowująca stronę (kolor: biały lub czarny)
+    bool isPlaced; // atrybut informująca czy figura została ustawiona na danym pol
     QList <ChessSquare *> location; // lista przechowująca wskaźnik na aktualne położenie (pole szachowe) figury i położenie, do którego chcemy się ruszyć daną figurą
-
+    bool firstMove; // zmienna informująca czy aktualnie jest pierwszy ruch w partii czy nie
 };
 
 #endif // PIECE_H

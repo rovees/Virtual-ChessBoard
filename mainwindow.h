@@ -7,7 +7,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class Szachy; }
 QT_END_NAMESPACE
 
-class Szachy: public QMainWindow
+class Szachy : public QMainWindow
 {
     Q_OBJECT
 

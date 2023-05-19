@@ -120,6 +120,40 @@ void Game::setTurn(QString value)
     turn = value;
 }
 
+void Game::setPieceToMove(Piece *p)
+{
+    pieceToMove = p;
+}
+
+Piece *Game::getPieceToMove()
+{
+    return pieceToMove;
+}
+
+QGraphicsTextItem *Game::getCheck()
+{
+    return check;
+}
+
+QList <Piece *> &Game::getAlivePiece()
+{
+    return alivePiece;
+}
+
+void Game::setCollection(int x, int y, ChessSquare *box)
+{
+    collection[x][y] = box;
+}
+
+ChessSquare *Game::getCollection(int x, int y)
+{
+    if (x >= 0 && x < N && y >= 0 && y < N)
+    {
+        return collection[x][y];
+    }
+    else
+        return 0;
+}
 
 void Game::changeTurn()
 {

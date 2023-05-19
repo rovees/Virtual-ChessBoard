@@ -4,16 +4,14 @@
 #include <QGraphicsRectItem>
 
 
-class Button:public QObject, public QGraphicsRectItem
+class Button : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
 
-    Button(QString name, QGraphicsItem * parent = NULL);
+    Button(QString name, QGraphicsItem * parent = nullptr);
 
-    //public methods
-
-    //events
+    // zdarzenia
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
