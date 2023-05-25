@@ -6,26 +6,27 @@
 #include <QGraphicsSceneMouseEvent>
 
 class Piece;
+class ChessSquareGraphicsItem;
 
 class ChessSquare : public QGraphicsRectItem
 {
 public:
 
-    ChessSquare(QGraphicsItem *parent = 0);
+    ChessSquare();
     ~ChessSquare();
 
 
     // zdarzenie kliknięcia myszą
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    // void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
     /* ustawienie koloru pola szachowego*/
-    void setColor(QColor color);
+    // void setColor(QColor color);
     /* */
     void placePiece(Piece *piece);
 
 
-    void resetOriginalColor(); // metoda resetująca kolor pola szachowego na kolor oryginalny
-    void setOriginalColor(QColor value);
+    // void resetOriginalColor(); // metoda resetująca kolor pola szachowego na kolor oryginalny
+    // void setOriginalColor(QColor value);
 
     // gettery i settery odpowiednich atrybutów
     bool getHasChessPiece();
@@ -42,6 +43,8 @@ public:
 
     QString getChessPieceColor() ;
     void setChessPieceColor(QString value);
+    ChessSquareGraphicsItem *getBoxGraphics();
+    void setBoxGraphics(ChessSquareGraphicsItem *boxG);
 
     // sprawdzanie czy jest szach
     void checkForCheck();
@@ -52,9 +55,10 @@ public:
     // Piece * currentPiece; // wskaźnik na aktualną figurę szachową znajdującą się na danym polu szachowym
 
 private:
-    QBrush brush;
-    QColor originalColor; // oryginalny kolor pola szachowego
+    // QBrush brush;
+    // QColor originalColor; // oryginalny kolor pola szachowego
     // atrybuty przechowujące informacje o położeniu pola szachowego na szachownicy
+    ChessSquareGraphicsItem *boxGraphics; // wskaźnik na obiekt graficzny reprezentujący pojedyncze pole szachowe
     int rowPos;
     int colPos;
     Piece * currentPiece; // wskaźnik na aktualną figurę szachową znajdującą się na danym polu szachowym

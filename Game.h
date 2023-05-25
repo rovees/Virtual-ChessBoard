@@ -12,7 +12,7 @@ class Game : public QGraphicsView
     Q_OBJECT
 public:
 
-    Game(QWidget *parent = 0);
+    Game(QWidget *parent = nullptr);
     // ~Game();
     /* metoda tworząca obszar, w którym będą wyświetlane figury (odpowiedniego koloru), które zostały zbite*/
     void drawDeadHolder(int x, int y, QColor color);

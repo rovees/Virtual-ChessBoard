@@ -6,10 +6,10 @@
 class Knight:public Piece
 {
 public:
-    Knight(QString team, QGraphicsItem *parent = 0);
+    Knight(QString team); // , QGraphicsItem *parent = 0);
     ~Knight();
 
-    void setImage();
+    // void setImage();
     void move();
 
 };

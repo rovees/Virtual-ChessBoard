@@ -19,7 +19,7 @@ Button::Button(QString name, QGraphicsItem *parent)
     text->setPos(xPos,yPos);
     text->setDefaultTextColor(Qt::white);
 
-    // Allow responding to hover
+    // reagowanie na najechanie myszką
     setAcceptHoverEvents(true);
 }
 
@@ -39,6 +39,7 @@ void Button::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
         setBrush(brush);
     }
 }
+
 void Button::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
     // zmiana koloru
     if(event){

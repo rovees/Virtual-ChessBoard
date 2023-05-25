@@ -10,38 +10,54 @@ CONFIG += c++17
 
 SOURCES += \
     Bishop.cpp \
+    BishopGraphics.cpp \
     Button.cpp \
     ChessBoard.cpp \
     ChessSquare.cpp \
+    ChessSquareGraphicsItem.cpp \
     Game.cpp \
     King.cpp \
+    KingGraphics.cpp \
     Knight.cpp \
+    KnigthGraphics.cpp \
     Pawn.cpp \
+    PawnGraphics.cpp \
     Piece.cpp \
+    PieceGraphicsItem.cpp \
     Queen.cpp \
+    QueenGraphics.cpp \
     Rook.cpp \
+    RookGraphics.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     Bishop.h \
     Bishop.h \
+    BishopGraphics.h \
     Button.h \
     ChessBoard.h \
     ChessSquare.h \
+    ChessSquareGraphicsItem.h \
     Game.h \
     King.h \
     King.h \
+    KingGraphics.h \
     Knight.h \
     Knight.h \
+    KnightGraphics.h \
     Pawn.h \
     Pawn.h \
+    PawnGraphics.h \
     Piece.h \
+    PieceGraphicsItem.h \
     Pieces.h \
     Queen.h \
     Queen.h \
+    QueenGraphics.h \
     Rook.h \
     Rook.h \
+    RookGraphics.h \
     mainwindow.h
 
 FORMS += \

@@ -1,11 +1,14 @@
 #include "Rook.h"
 #include "Game.h"
+#include "RookGraphics.h"
+
 
 extern Game *game;
 
-Rook::Rook(QString team,QGraphicsItem *parent) : Piece(team,parent)
+Rook::Rook(QString team) : Piece(team) //,parent)
 {
-    setImage();
+    pieceGraphics = new RookGraphics(nullptr, this);
+    // setImage();
 }
 
 Rook::~Rook()
@@ -13,6 +16,7 @@ Rook::~Rook()
 
 }
 
+/*
 void Rook::setImage()
 {
     if(side == "WHITE")
@@ -20,6 +24,7 @@ void Rook::setImage()
     else
         setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_rook.png"));
 }
+*/
 
 void Rook::move()
 {
@@ -29,7 +34,7 @@ void Rook::move()
     QString team = this->getSide();
 
     // ruch w dół
-    for(int i = row-1,j = col; i >= 0 ; i--) {
+    for(int i = row - 1, j = col; i >= 0; i--) {
         if(game->getCollection(i, j)->getChessPieceColor() == team ) {
             break;
         }
@@ -42,7 +47,7 @@ void Rook::move()
     }
 
     // ruch w dół
-    for(int i = row+1,j = col; i <= 7 ; i++) {
+    for(int i = row + 1, j = col; i <= 7; i++) {
         if(game->getCollection(i, j)->getChessPieceColor() == team ) {
             break;
         }
@@ -56,7 +61,7 @@ void Rook::move()
     }
 
     // ruch w lewo
-    for(int i = row,j = col-1; j >= 0 ; j--) {
+    for(int i = row, j = col - 1; j >= 0; j--) {
         if(game->getCollection(i, j)->getChessPieceColor() == team ) {
             break;
         }
@@ -69,7 +74,7 @@ void Rook::move()
     }
 
     // ruch w prawo
-    for(int i = row,j = col+1; j <= 7 ; j++)
+    for(int i = row, j = col + 1; j <= 7; j++)
     {
         if(game->getCollection(i, j)->getChessPieceColor() == team ) {
             break;

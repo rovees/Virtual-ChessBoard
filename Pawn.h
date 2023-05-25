@@ -6,15 +6,16 @@
 
 
 
-class Pawn:public Piece
+class Pawn : public Piece
 {
 public:
-    Pawn(QString team, QGraphicsItem *parent = 0);
+    Pawn(QString team); //, QGraphicsItem *parent = 0);
     ~Pawn();
 
-    void setImage();
+    // void setImage();
     void move();
-
+signals:
+    void promotePiece();
 };
 
 #endif // PAWN_H

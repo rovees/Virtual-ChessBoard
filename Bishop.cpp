@@ -1,12 +1,17 @@
 #include "Bishop.h"
 #include <QDebug>
 #include "Game.h"
+#include "BishopGraphics.h"
+
 
 extern Game *game;
 
-Bishop::Bishop(QString team,QGraphicsItem *parent) : Piece(team, parent)
+Bishop::Bishop(QString team) : Piece(team) //,QGraphicsItem *parent) : Piece(team, parent)
 {
-    setImage();
+    pieceGraphics = new BishopGraphics(nullptr, this);
+    // pieceGraphics->setChessPiece(this);
+    // this->pieceGraphics->setImage();
+    // setImage();
 }
 
 Bishop::~Bishop()
@@ -14,6 +19,7 @@ Bishop::~Bishop()
 
 }
 
+/*
 void Bishop::setImage()
 {
     if(side == "WHITE")
@@ -21,7 +27,7 @@ void Bishop::setImage()
     else
         setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_bishop.png"));
 }
-
+*/
 
 void Bishop::move()
 {
@@ -31,7 +37,7 @@ void Bishop::move()
     QString team = this->getSide();
 
     // ruch w góre w lewo
-    for(int i = row - 1, j=col - 1; i >= 0 && j >= 0; i--, j--) {
+    for(int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
 
         if(game->getCollection(i, j)->getChessPieceColor() == team ) {
             break;

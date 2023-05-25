@@ -8,10 +8,10 @@
 class King:public Piece
 {
 public:
-    King(QString team, QGraphicsItem *parent = 0);
+    King(QString team); //, QGraphicsItem *parent = 0);
     ~King();
 
-    void setImage();
+    // void setImage();
     // metoda do znalezienia niebezpiecznych pól dla króla
     void findUnSafeLocation();
     void move();

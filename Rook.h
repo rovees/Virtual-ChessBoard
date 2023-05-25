@@ -3,13 +3,13 @@
 
 #include "Piece.h"
 
-class Rook:public Piece
+class Rook : public Piece
 {
 public:
-    Rook(QString team, QGraphicsItem *parent = 0);
+    Rook(QString team); //, QGraphicsItem *parent = 0);
     ~Rook();
 
-    void setImage();
+    // void setImage();
     void move();
 
 };

@@ -60,7 +60,7 @@ void Game::displayDeadWhite()
             j = 0;
         }
         j++;
-        whiteDead[i]->setPos(0.8*40+SHIFT*j,0.8*100+SHIFT*2*k);
+        whiteDead[i]->getPieceGraphics()->setPos(0.8*40+SHIFT*j,0.8*100+SHIFT*2*k);
     }
 }
 
@@ -75,7 +75,7 @@ void Game::displayDeadBlack()
             j = 0;
         }
         j++;
-        blackDead[i]->setPos(0.8*1140+SHIFT*j,0.8*100+SHIFT*2*k);
+        blackDead[i]->getPieceGraphics()->setPos(0.8*1140+SHIFT*j,0.8*100+SHIFT*2*k);
     }
 }
 
@@ -202,19 +202,6 @@ void Game::drawDeadHolder(int x, int y, QColor color)
 
 void Game::displayMainMenu()
 {
-
-    QGraphicsPixmapItem *p = new QGraphicsPixmapItem();
-    p->setPixmap(QPixmap(":/images/white_king.png"));
-    p->setPos(0.8*420,0.8*170);
-    addToScene(p);
-    listG.append(p);
-
-    QGraphicsPixmapItem *p1 = new QGraphicsPixmapItem();
-    p1->setPixmap(QPixmap(":/images/black_king.png"));
-    p1->setPos(0.8*920,0.8*170);
-    addToScene(p1);
-    listG.append(p1);
-
     // utworzenie tytułu
     QGraphicsTextItem *titleText = new QGraphicsTextItem("Chess");
     QFont titleFont("arial", 0.8*50);
@@ -252,7 +239,7 @@ void Game::setTurnDisplay(QString value)
 
 void Game::removeAll(){
     QList<QGraphicsItem*> itemsList = gameScene->items();
-    for(size_t i = 0, n = itemsList.size();i<n;i++) {
+    for(size_t i = 0, n = itemsList.size(); i < n; i++) {
         // if(itemsList[i] != check)
         removeFromScene(itemsList[i]);
     }

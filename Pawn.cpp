@@ -3,12 +3,15 @@
 #include <QDebug>
 #include <typeinfo>
 #include "King.h"
+#include "PawnGraphics.h"
+
 
 extern Game * game;
 
-Pawn::Pawn(QString team, QGraphicsItem *parent) : Piece(team, parent)
+Pawn::Pawn(QString team) : Piece(team) //, parent)
 {
-    setImage();
+    // setImage();
+    pieceGraphics = new PawnGraphics(nullptr, this);
     firstMove = true;
 }
 
@@ -17,6 +20,7 @@ Pawn::~Pawn()
 
 }
 
+/*
 void Pawn::setImage()
 {
     if(side == "WHITE")
@@ -24,7 +28,7 @@ void Pawn::setImage()
     else
         setPixmap(QPixmap("C:/Users/Radek/Documents/SZASZKI/black_pawn.png"));
 }
-
+*/
 
 
 void Pawn::move()

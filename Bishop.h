@@ -8,9 +8,9 @@ class Bishop : public Piece
 {
 public:
 
-    Bishop(QString team, QGraphicsItem *parent = 0);
+    Bishop(QString team); //, QGraphicsItem *parent = 0);
     ~Bishop();
-    void setImage();
+    // void setImage();
     void move();
 
 };

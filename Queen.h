@@ -6,13 +6,13 @@
 
 
 
-class Queen:public Piece
+class Queen : public Piece
 {
 public:
-    Queen(QString team, QGraphicsItem *parent = 0);
+    Queen(QString team); //, QGraphicsItem *parent = 0);
     ~Queen();
 
-    void setImage();
+    // void setImage();
     void move();
 
 };

@@ -10,6 +10,7 @@
 
 extern Game *game;
 
+
 ChessBoard::ChessBoard()
 {
     setUpBlack();
@@ -31,16 +32,15 @@ void ChessBoard::drawBoxes(int x,int y)
             game->setCollection(i, j, box);
             box->setRowPos(i);
             box->setColPos(j);
-            box->setPos(x+SHIFT*j,y+SHIFT*i);
+            box->getBoxGraphics()->setPos(x+SHIFT*j,y+SHIFT*i);
             if((i + j)%2 == 0)
-                box->setOriginalColor(Qt::lightGray);
+                box->getBoxGraphics()->setOriginalColor(Qt::lightGray);
             else
-                box->setOriginalColor(Qt::darkGray);
-            game->addToScene(box);
+                box->getBoxGraphics()->setOriginalColor(Qt::darkGray);
+            game->addToScene(box->getBoxGraphics());
 
         }
     }
-
 }
 
 
@@ -54,13 +54,13 @@ void ChessBoard::addChessPiece() {
                 static int k;
                 box->placePiece(black[k]);
                 game->getAlivePiece().append(black[k]);
-                game->addToScene(black[k++]);
+                game->addToScene(black[k++]->getPieceGraphics());
             }
             if(i > 5) {
                 static int h;
                 box->placePiece(white[h]);
                 game->getAlivePiece().append(white[h]);
-                game->addToScene(white[h++]);
+                game->addToScene(white[h++]->getPieceGraphics());
             }
 
         }
