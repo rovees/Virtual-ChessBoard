@@ -1,42 +1,94 @@
 #ifndef GAME_H
 #define GAME_H
+
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <ChessBoard.h>
 #include "Piece.h"
+// #include "GameGraphics.h"
+
 
 const int N = 8;
 
-class Game : public QGraphicsView
+class Piece;
+class Game;
+
+ class GameGraphics : public QGraphicsView
+ {
+     Q_OBJECT
+ public:
+     GameGraphics(QWidget *parent = nullptr, Game *g = nullptr);
+
+     Game *getGameLogic();
+     /* metoda tworząca obszar, w którym będą wyświetlane figury (odpowiedniego koloru), które zostały zbite*/
+     void drawDeadHolder(int x, int y, QColor color);
+     /* metoda rysująca szachownicę */
+     void drawChessBoard();
+     /* wyświetlenie zbitych figur białych i czarnych */
+     void displayDeadWhite();
+     void displayDeadBlack();
+     /* metoda umieszczająca zbite figury do odpowiedniego obszaru ich przechowywania (w zależności od koloru figury) c*/
+     void placeInDeadPlace(Piece *piece);
+     void addToScene(QGraphicsItem *item);
+     void removeFromScene(QGraphicsItem *item);
+     QGraphicsTextItem *getCheck();
+     /* metoda zmieniająca wartość atrybutu tura w zależności jaka jest aktualna jego wartość */
+     void changeTurn();
+     void displayMainMenu();
+     void setTurnDisplay(QString value);
+     void removeAll();
+ public slots:
+     void start();
+ private:
+     Game *gameLogic;
+     QGraphicsScene *gameScene;
+     QGraphicsRectItem *deadHolder; // wskaźnik na obiekt klasy QGraphicsRectItem, który reprezentuje pole do wyświetlania zbitych figur
+     QGraphicsTextItem *check; // wskaźnik na pole tekstowe do wyświetlania informacji o szachu
+     QList <QGraphicsItem *> listG; // lista przechowująca wskaźniki na obiekty QGraphicsItem reprezentujące ekran menu głównego
+     QGraphicsTextItem *turnDisplay; // wskaźnik na obiekt klasy QGraphicsRectItem, który reprezentuje pole, w którym wyświetla się aktualna tura
+ };
+
+
+class Game
 {
-    Q_OBJECT
+
 public:
 
-    Game(QWidget *parent = nullptr);
+    Game();
+    // Game(QWidget *parent = nullptr);
     // ~Game();
     /* metoda tworząca obszar, w którym będą wyświetlane figury (odpowiedniego koloru), które zostały zbite*/
-    void drawDeadHolder(int x, int y, QColor color);
+    // void drawDeadHolder(int x, int y, QColor color);
     /* metoda rysująca szachownicę */
-    void drawChessBoard();
+    // void drawChessBoard();
     /* wyświetlenie zbitych figur białych i czarnych */
-    void displayDeadWhite();
-    void displayDeadBlack();
+    //void displayDeadWhite();
+    //void displayDeadBlack();
     /* metoda umieszczająca zbite figury do odpowiedniego obszaru ich przechowywania (w zależności od koloru figury) c*/
-    void placeInDeadPlace(Piece *piece);
+    // void placeInDeadPlace(Piece *piece);
 
     /* metoda dodająca elementy graficzne do okna aplikacji */
-    void addToScene(QGraphicsItem *item);
+    // void addToScene(QGraphicsItem *item);
     /* metoda usuwająca elementy graficzne z okna aplikacji */
-    void removeFromScene(QGraphicsItem *item);
+    // void removeFromScene(QGraphicsItem *item);
 
     // Wskaźnik na figurę, którą chcemy przesunąć
     // Piece *pieceToMove;
 
     // gettery i settey odpowiednich atrybutów
-    QString getTurn() ;
-    void setTurn( QString value);
 
-    QGraphicsTextItem *getCheck();
+    GameGraphics *getGameGraphics();
+    void setGameGraphics(GameGraphics *gameG);
+
+    QList <Piece *>& getWhiteDead();
+
+    // void setWhiteDead
+    QList <Piece *>& getBlackDead();
+
+    QString getTurn() ;
+    void setTurn(QString value);
+
+    // QGraphicsTextItem *getCheck();
 
     QList <Piece *>& getAlivePiece(); // getter listy żywych figur (chcemy zwracać oryginalną listę, dlatego zwracamy referencję)
 
@@ -46,37 +98,37 @@ public:
     void setCollection(int x, int y, ChessSquare *box);
     ChessSquare *getCollection(int x, int y);
 
+    ChessBoard *getChess();
     /* metoda zmieniająca wartość atrybutu tura w zależności jaka jest aktualna jego wartość */
-    void changeTurn();
+    // void changeTurn();
 
 
     // ChessSquare *collection[8][8]; // tablica 8x8 reprezentująca pola szachowe
     // QGraphicsTextItem *check;
     // QList <Piece *> alivePiece; // lista przechowująca figury znajdujące się na szachownicy
-    void displayMainMenu();
+    // void displayMainMenu();
 
     /* */
     void gameOver();
     /* usunięcie wszystkich elementów graficznych */
-    void removeAll();
+    // void removeAll();
     /* wyświetlenie aktualnej tury */
-    void setTurnDisplay(QString value);
-public slots:
-    void start();
+    // void setTurnDisplay(QString value);
 private:
-    QGraphicsScene *gameScene;
+    // QGraphicsScene *gameScene;
     // Listy przechowujące zbite figury (białe lub czarne)
+    GameGraphics *gameGraphics;
     QList <Piece *> whiteDead;
     QList <Piece *> blackDead;
-    QGraphicsRectItem *deadHolder; // wskaźnik na obiekt klasy QGraphicsRectItem, który reprezentuje pole do wyświetlania zbitych figur
+    // QGraphicsRectItem *deadHolder; // wskaźnik na obiekt klasy QGraphicsRectItem, który reprezentuje pole do wyświetlania zbitych figur
     QString turn; // atrybut przechowujący aktualną turę
     Piece *pieceToMove; // Wskaźnik na figurę, którą chcemy przesunąć
-    QGraphicsTextItem *check; // wskaźnik na pole tekstowe do wyświetlania informacji o szachu
+    // QGraphicsTextItem *check; // wskaźnik na pole tekstowe do wyświetlania informacji o szachu
     QList <Piece *> alivePiece; // lista przechowująca figury znajdujące się na szachownicy
     ChessSquare *collection[N][N]; // tablica reprezentująca pola szachowe
     ChessBoard *chess; // wskaźnik na obiekt klasy ChessBoard, który reprezentuje szachownicę
-    QList <QGraphicsItem *> listG; // lista przechowująca wskaźniki na obiekty QGraphicsItem reprezentujące ekran menu głównego
-    QGraphicsTextItem *turnDisplay; // wskaźnik na obiekt klasy QGraphicsRectItem, który reprezentuje pole, w którym wyświetla się aktualna tura
+    // QList <QGraphicsItem *> listG; // lista przechowująca wskaźniki na obiekty QGraphicsItem reprezentujące ekran menu głównego
+    // QGraphicsTextItem *turnDisplay; // wskaźnik na obiekt klasy QGraphicsRectItem, który reprezentuje pole, w którym wyświetla się aktualna tura
 
 };
 
