@@ -18,7 +18,7 @@ Piece::~Piece()
 
 }
 
-
+/*
 void Piece::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     // odznaczanie wybranej figury
@@ -40,12 +40,13 @@ void Piece::mousePressEvent(QGraphicsSceneMouseEvent *event)
         game->getPieceToMove()->getCurrentBox()->getBoxGraphics()->setColor(Qt::green);
         game->getPieceToMove()->move();
     }
-    /* game->pieceToMove - to figura którą chcemy przesunąć, a 'this' to figura na którą aktualnie klikamy, jest to po prostu
-    mechanizm bicia, stąd kolory tych dwóch figur muszą być różne */
+    game->pieceToMove - to figura którą chcemy przesunąć, a 'this' to figura na którą aktualnie klikamy, jest to po prostu
+    mechanizm bicia, stąd kolory tych dwóch figur muszą być różne
     else if(this->getSide() != game->getPieceToMove()->getSide()){
         this->getCurrentBox()->getBoxGraphics()->mousePressEvent(event);
     }
 }
+*/
 
 void Piece::setCurrentBox(ChessSquare *box)
 {

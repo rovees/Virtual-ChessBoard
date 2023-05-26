@@ -1,12 +1,9 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-#include <QGraphicsPixmapItem>
-#include "ChessSquare.h"
-#include <QGraphicsSceneMouseEvent>
 #include "PieceGraphicsItem.h"
 
-//class ChessSquare;
+class ChessSquare;
 
 /*
 class PieceGraphicsIcon
@@ -19,12 +16,13 @@ public:
 };
 */
 
+
 class Piece
 {
 public:
     Piece(QString team = ""); //, QGraphicsItem *parent = 0);
     ~Piece();
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    // void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void setCurrentBox(ChessSquare *box);
 
     // PieceGraphicsIcon pieceIcon;

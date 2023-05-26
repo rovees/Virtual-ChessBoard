@@ -6,8 +6,8 @@
 #include <QGraphicsSceneMouseEvent>
 #include "ChessSquareGraphicsItem.h"
 
-class ChessSquareGraphicsItem;
-class PieceGraphicsItem;
+// class ChessSquareGraphicsItem;
+// class PieceGraphicsItem;
 
 // #include "Piece.h"
 
@@ -21,7 +21,7 @@ public:
     // w które możemy się przesunąć), w momencie kiedy odklikniemy wybraną figurę lub wykonamy ruch to zostaną przywrócone oryginalne kolory pól, do
     //    których można było się przesunąć
     void decolor();
-    // void mousePressEvent(QGraphicsSceneMouseEvent *event, Piece *piece);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
     //metoda ustawiająca odpowiedni kolor pola (w zależności czy jest to pole, na którym znajduje się figura,
     // którą możemy zbić lub jest puste pole
     // bool boxSetting(ChessSquare *box);
