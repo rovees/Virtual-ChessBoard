@@ -8,7 +8,7 @@
 class Piece;
 class ChessSquareGraphicsItem;
 
-class ChessSquare : public QGraphicsRectItem
+class ChessSquare // : public QGraphicsRectItem
 {
 public:
 

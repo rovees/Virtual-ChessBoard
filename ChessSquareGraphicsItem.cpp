@@ -1,7 +1,7 @@
 #include "ChessSquareGraphicsItem.h"
 #include "ChessSquare.h"
 #include "Game.h"
-
+#include "GameGraphics.h"
 
 extern Game *game;
 
@@ -22,7 +22,7 @@ void ChessSquareGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
     // Deselecting counter part of ChessPiece
     if(currSquare->getCurrentPiece() == game->getPieceToMove() && currSquare->getCurrentPiece()){
 
-        currSquare->getCurrentPiece()->mousePressEvent(event);
+        currSquare->getCurrentPiece()->getPieceGraphics()->mousePressEvent(event);
         return;
     }
 
@@ -57,7 +57,7 @@ void ChessSquareGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
             this->currSquare->getCurrentPiece()->setIsPlaced(false);
             this->currSquare->getCurrentPiece()->setCurrentBox(nullptr);
             // this->currSquare->getCurrentPiece()->getCurrentBox()->setBoxGraphics(nullptr);
-            game->placeInDeadPlace(this->currSquare->getCurrentPiece());
+            game->getGameGraphics()->placeInDeadPlace(this->currSquare->getCurrentPiece());
 
         }
         // changing the new stat and resetting the previous left region
@@ -68,7 +68,7 @@ void ChessSquareGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
         game->setPieceToMove(nullptr);
         //changing turn
-        game->changeTurn();
+        game->getGameGraphics()->changeTurn();
         this->currSquare->checkForCheck();
         qDebug() << "6: " << this->currSquare;
     }
@@ -77,7 +77,7 @@ void ChessSquareGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
     else if(this->currSquare->getHasChessPiece())
     {
         qDebug() << "7: " << this->currSquare;
-        currSquare->getCurrentPiece()->mousePressEvent(event);
+        currSquare->getCurrentPiece()->getPieceGraphics()->mousePressEvent(event);
         qDebug() << "8: " << this->currSquare;
     }
 

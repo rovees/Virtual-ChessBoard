@@ -1,12 +1,14 @@
 #include "ChessSquare.h"
-#include "ChessBoard.h"
-#include "Game.h"
+// #include "ChessBoard.h"
 #include "Queen.h"
 #include "Rook.h"
 #include "Pawn.h"
 #include "King.h"
 #include "Knight.h"
 #include "Bishop.h"
+#include "Game.h"
+#include "GameGraphics.h"
+
 
 extern Game *game;
 
@@ -37,7 +39,7 @@ void ChessBoard::drawBoxes(int x,int y)
                 box->getBoxGraphics()->setOriginalColor(Qt::lightGray);
             else
                 box->getBoxGraphics()->setOriginalColor(Qt::darkGray);
-            game->addToScene(box->getBoxGraphics());
+            game->getGameGraphics()->addToScene(box->getBoxGraphics());
 
         }
     }
@@ -54,13 +56,13 @@ void ChessBoard::addChessPiece() {
                 static int k;
                 box->placePiece(black[k]);
                 game->getAlivePiece().append(black[k]);
-                game->addToScene(black[k++]->getPieceGraphics());
+                game->getGameGraphics()->addToScene(black[k++]->getPieceGraphics());
             }
             if(i > 5) {
                 static int h;
                 box->placePiece(white[h]);
                 game->getAlivePiece().append(white[h]);
-                game->addToScene(white[h++]->getPieceGraphics());
+                game->getGameGraphics()->addToScene(white[h++]->getPieceGraphics());
             }
 
         }

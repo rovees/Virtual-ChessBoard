@@ -1,6 +1,7 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 #include <QGraphicsRectItem>
+// #include "Game.h"
 #include "Piece.h"
 
 class ChessBoard

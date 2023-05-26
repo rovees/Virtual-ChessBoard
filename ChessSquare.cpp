@@ -2,6 +2,7 @@
 #include "Game.h"
 #include <QDebug>
 #include "King.h"
+#include "GameGraphics.h"
 
 extern Game *game;
 
@@ -113,8 +114,8 @@ void ChessSquare::checkForCheck()
                 if(p->getSide() == pList[i]->getSide())
                     continue;
                 bList[j]->getBoxGraphics()->setColor(Qt::darkRed);
-                if(!game->getCheck()->isVisible())
-                    game->getCheck()->setVisible(true);
+                if(!game->getGameGraphics()->getCheck()->isVisible())
+                    game->getGameGraphics()->getCheck()->setVisible(true);
                 else{
                     bList[j]->getBoxGraphics()->resetOriginalColor();
                     pList[i]->getCurrentBox()->getBoxGraphics()->resetOriginalColor();
@@ -130,7 +131,7 @@ void ChessSquare::checkForCheck()
 
     // jesli nie ma szacha to resetujemy kolory pól wszystkich figur na szachownicy
     if(!c){
-        game->getCheck()->setVisible(false);
+        game->getGameGraphics()->getCheck()->setVisible(false);
         for(size_t i = 0, n = pList.size(); i < n; i++ )
             pList[i]->getCurrentBox()->getBoxGraphics()->resetOriginalColor();
     }

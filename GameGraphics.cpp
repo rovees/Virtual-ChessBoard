@@ -1,86 +1,7 @@
+#include "Button.h"
 #include "Game.h"
-// #include "Button.h"
-#include <QPixmap>
-// #include "King.h"
-#include <QDebug>
 #include "GameGraphics.h"
 
-Game::Game()
-{
-    chess = new ChessBoard();
-    gameGraphics = new GameGraphics(nullptr, this);
-    pieceToMove = nullptr;
-    setTurn("WHITE");
-}
-
-GameGraphics *Game::getGameGraphics()
-{
-    return gameGraphics;
-}
-
-void Game::setGameGraphics(GameGraphics *gameG)
-{
-    gameGraphics = gameG;
-}
-
-QList <Piece *> &Game::getWhiteDead()
-{
-    return whiteDead;
-}
-
-QList <Piece *> &Game::getBlackDead()
-{
-    return blackDead;
-}
-
-
-QString Game::getTurn()
-{
-    return turn;
-}
-
-void Game::setTurn(QString value)
-{
-    turn = value;
-}
-
-void Game::setPieceToMove(Piece *p)
-{
-    pieceToMove = p;
-}
-
-Piece *Game::getPieceToMove()
-{
-    return pieceToMove;
-}
-
-
-QList <Piece *> &Game::getAlivePiece()
-{
-    return alivePiece;
-}
-
-void Game::setCollection(int x, int y, ChessSquare *box)
-{
-    collection[x][y] = box;
-}
-
-ChessSquare *Game::getCollection(int x, int y)
-{
-    if (x >= 0 && x < N && y >= 0 && y < N)
-    {
-        return collection[x][y];
-    }
-    else
-        return 0;
-}
-
-ChessBoard *Game::getChess()
-{
-    return chess;
-}
-
-/*
 GameGraphics::GameGraphics(QWidget *parent, Game *g) : QGraphicsView(parent)
 {
     // utworzenie sceny
@@ -289,5 +210,3 @@ QGraphicsTextItem *GameGraphics::getCheck()
 {
     return check;
 }
-*/
-
