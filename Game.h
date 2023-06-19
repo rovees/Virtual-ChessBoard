@@ -4,97 +4,130 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <ChessBoard.h>
-// #include "Piece.h"
-// #include "GameGraphics.h"
 
-// class Game;
-
-const int N = 8;
+const static int N = 8;
 
 class GameGraphics;
 class Piece;
 
 
+/**
+ * @brief Klasa reprezentująca grę szachową.
+ */
 class Game
 {
 
 public:
 
+    /**
+     * @brief Konstruktor klasy Game.
+     */
     Game();
-    // Game(QWidget *parent = nullptr);
-    // ~Game();
-    /* metoda tworząca obszar, w którym będą wyświetlane figury (odpowiedniego koloru), które zostały zbite*/
-    // void drawDeadHolder(int x, int y, QColor color);
-    /* metoda rysująca szachownicę */
-    // void drawChessBoard();
-    /* wyświetlenie zbitych figur białych i czarnych */
-    //void displayDeadWhite();
-    //void displayDeadBlack();
-    /* metoda umieszczająca zbite figury do odpowiedniego obszaru ich przechowywania (w zależności od koloru figury) c*/
-    // void placeInDeadPlace(Piece *piece);
 
-    /* metoda dodająca elementy graficzne do okna aplikacji */
-    // void addToScene(QGraphicsItem *item);
-    /* metoda usuwająca elementy graficzne z okna aplikacji */
-    // void removeFromScene(QGraphicsItem *item);
+    /**
+     * @brief Destruktor klasy Game.
+     */
+    ~Game();
 
-    // Wskaźnik na figurę, którą chcemy przesunąć
-    // Piece *pieceToMove;
 
-    // gettery i settey odpowiednich atrybutów
-
+    /**
+     * @brief Zwraca wskaźnik na obiekt graficzny reprezentujący grę.
+     * @return Wskaźnik na obiekt GameGraphics.
+     */
     GameGraphics *getGameGraphics();
+
+    /**
+     * @brief Ustawia wskaźnik na obiekt graficzny reprezentujący grę.
+     * \param gameG Wskaźnik na obiekt GameGraphics.
+     */
     void setGameGraphics(GameGraphics *gameG);
 
+    /**
+     * @brief Zwraca listę zbitych białych figur.
+     * @return Referencja do listy wskaźników na figury (białe).
+     */
     QList <Piece *>& getWhiteDead();
 
-    // void setWhiteDead
+    /**
+     * @brief Zwraca listę zbitych czarnych figur.
+     * @return Referencja do listy wskaźników na figury (czarne).
+     */
     QList <Piece *>& getBlackDead();
 
-    QString getTurn() ;
+    /**
+     * @brief Zwraca aktualną turę.
+     * @return Aktualna tura (kolor: biały lub czarny).
+     */
+    QString getTurn();
+
+    /**
+     * @brief Ustawia aktualną turę.
+     * \param value Aktualna tura (kolor: biały lub czarny).
+     */
     void setTurn(QString value);
 
-    // QGraphicsTextItem *getCheck();
+    /**
+     * @brief Zwraca listę żywych figur.
+     * @return Referencja do listy wskaźników na figury (żywe).
+     */
+    QList <Piece *>& getAlivePiece();
 
-    QList <Piece *>& getAlivePiece(); // getter listy żywych figur (chcemy zwracać oryginalną listę, dlatego zwracamy referencję)
-
+    /**
+     * @brief Ustawia figurę do przesunięcia.
+     * \param p Wskaźnik na figurę.
+     */
     void setPieceToMove(Piece *p);
+
+    /**
+     * @brief Zwraca wskaźnik na figurę do przesunięcia.
+     * @return Wskaźnik na figurę.
+     */
     Piece *getPieceToMove();
 
+    /**
+     * @brief Ustawia kolekcję na określonym polu.
+     * \param x Indeks kolumny pola.
+     * \param y Indeks wiersza pola.
+     * \param box Wskaźnik na pole szachowe.
+     */
     void setCollection(int x, int y, ChessSquare *box);
+
+    /**
+     * @brief Zwraca pole kolekcji o określonych indeksach.
+     * \param x Indeks kolumny pola.
+     * \param y Indeks wiersza pola.
+     * @return Wskaźnik na pole szachowe.
+     */
     ChessSquare *getCollection(int x, int y);
 
+    /**
+     * @brief Zwraca wskaźnik na obiekt reprezentujący szachownicę.
+     * @return Wskaźnik na obiekt ChessBoard.
+     */
     ChessBoard *getChess();
-    /* metoda zmieniająca wartość atrybutu tura w zależności jaka jest aktualna jego wartość */
-    // void changeTurn();
 
+    /**
+     * @brief Zamienia starą figurę na nową w kolekcji.
+     * \param oldPiece Wskaźnik na starą figurę.
+     * \param newPiece Wskaźnik na nową figurę.
+     */
+    void replacePieceInCollection(Piece *oldPiece, Piece *newPiece);
 
-    // ChessSquare *collection[8][8]; // tablica 8x8 reprezentująca pola szachowe
-    // QGraphicsTextItem *check;
-    // QList <Piece *> alivePiece; // lista przechowująca figury znajdujące się na szachownicy
-    // void displayMainMenu();
-
-    /* */
+    /**
+     * @brief Kończy grę.
+     */
     void gameOver();
-    /* usunięcie wszystkich elementów graficznych */
-    // void removeAll();
-    /* wyświetlenie aktualnej tury */
-    // void setTurnDisplay(QString value);
+
 private:
-    // QGraphicsScene *gameScene;
-    // Listy przechowujące zbite figury (białe lub czarne)
-    GameGraphics *gameGraphics;
-    QList <Piece *> whiteDead;
-    QList <Piece *> blackDead;
-    // QGraphicsRectItem *deadHolder; // wskaźnik na obiekt klasy QGraphicsRectItem, który reprezentuje pole do wyświetlania zbitych figur
-    QString turn; // atrybut przechowujący aktualną turę
-    Piece *pieceToMove; // Wskaźnik na figurę, którą chcemy przesunąć
-    // QGraphicsTextItem *check; // wskaźnik na pole tekstowe do wyświetlania informacji o szachu
-    QList <Piece *> alivePiece; // lista przechowująca figury znajdujące się na szachownicy
-    ChessSquare *collection[N][N]; // tablica reprezentująca pola szachowe
-    ChessBoard *chess; // wskaźnik na obiekt klasy ChessBoard, który reprezentuje szachownicę
-    // QList <QGraphicsItem *> listG; // lista przechowująca wskaźniki na obiekty QGraphicsItem reprezentujące ekran menu głównego
-    // QGraphicsTextItem *turnDisplay; // wskaźnik na obiekt klasy QGraphicsRectItem, który reprezentuje pole, w którym wyświetla się aktualna tura
+
+    GameGraphics *gameGraphics; /**< Wskaźnik na obiekt graficzny reprezentujący grę. */
+    QList <Piece *> whiteDead; /**< Lista zbitych białych figur. */
+    QList <Piece *> blackDead; /**< Lista zbitych czarnych figur. */
+    QString turn; /**< Aktualna tura (kolor: biały lub czarny). */
+    Piece *pieceToMove; /**< Wskaźnik na figurę do przesunięcia. */
+    QList <Piece *> alivePiece; /**< Lista żywych figur. */
+    ChessSquare *collection[N][N]; /**< Tablica reprezentująca pola szachowe. */
+    ChessBoard *chess; /**< Wskaźnik na obiekt reprezentujący szachownicę. */
 
 };
 

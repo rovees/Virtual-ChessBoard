@@ -3,15 +3,31 @@
 
 #include "Piece.h"
 
+/**
+ * @brief Klasa reprezentująca wieżę na szachownicy.
+ *
+ * Klasa Rook dziedziczy po klasie Piece i odpowiada za logikę ruchu wieży na szachownicy.
+ */
 class Rook : public Piece
 {
 public:
-    Rook(QString team); //, QGraphicsItem *parent = 0);
+    /**
+     * @brief Konstruktor klasy Rook.
+     * \param team Strona (kolor) figury - "biały" lub "czarny".
+     */
+    Rook(QString team);
+
+    /**
+     * @brief Destruktor klasy Rook.
+     */
     ~Rook();
 
-    // void setImage();
+    /**
+     * @brief Wykonuje ruch wieży na szachownicy.
+     *
+     * Metoda move() implementuje logikę ruchu wieży na szachownicy.
+     */
     void move();
-
 };
 
 #endif // ROOK_H

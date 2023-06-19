@@ -3,15 +3,31 @@
 
 #include "Piece.h"
 
-class Knight:public Piece
+/**
+ * @brief Klasa reprezentująca skoczka.
+ *
+ * Klasa Knight dziedziczy po klasie Piece i reprezentuje figurę szachową - skoczka.
+ */
+class Knight : public Piece
 {
 public:
-    Knight(QString team); // , QGraphicsItem *parent = 0);
+    /**
+     * @brief Konstruktor klasy Knight.
+     * \param team Kolor figury (biały lub czarny).
+     */
+    Knight(QString team);
+
+    /**
+     * @brief Destruktor klasy Knight.
+     */
     ~Knight();
 
-    // void setImage();
+    /**
+     * @brief Realizuje ruch skoczka.
+     *
+     * Metoda move() implementuje odpowiedni ruch dla figury szachowej - skoczka.
+     */
     void move();
-
 };
 
 #endif // KNIGHT_H
