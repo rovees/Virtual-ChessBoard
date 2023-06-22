@@ -46,19 +46,32 @@ public:
     void move();
 
     /**
-     * @brief Ustawia flagę informującą o możliwości wykonania roszady.
+     * @brief Ustawia flagę informującą o możliwości wykonania długiej roszady.
      * \param value Wartość logiczna określająca, czy król może wykonać roszadę.
      */
-    void setCanCastle(bool value);
+    void setLongCastling(bool value);
 
     /**
-     * @brief Pobiera wartość flagi informującej o możliwości wykonania roszady.
+     * @brief Ustawia flagę informującą o możliwości wykonania krótkiej roszady.
+     * \param value Wartość logiczna określająca, czy król może wykonać roszadę.
+     */
+    void setShortCastling(bool value);
+
+    /**
+     * @brief Pobiera wartość flagi informującej o możliwości wykonania długiej roszady.
      * @return Wartość logiczna, czy król może wykonać roszadę.
      */
-    bool getCanCastle();
+    bool getLongCastling();
+
+    /**
+     * @brief Pobiera wartość flagi informującej o możliwości wykonania krótkiej roszady.
+     * @return Wartość logiczna, czy król może wykonać roszadę.
+     */
+    bool getShortCastling();
 
 private:
-    bool canCastle; ///< Flaga informująca, czy król może wykonać roszadę.
+    bool longCastling; ///< Flaga informująca, czy król może wykonać długą roszadę.
+    bool shortCastling; ///< Flaga informująca czy król może wykonać krótką roszadę.
 };
 
 #endif // KING_H

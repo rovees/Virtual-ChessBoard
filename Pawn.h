@@ -15,7 +15,7 @@ class Pawn : public Piece
 public:
     /**
      * @brief Konstruktor klasy Pawn.
-     * \param team Kolor figury (biały lub czarny).
+     * @param team Kolor figury (biały lub czarny).
      */
     Pawn(QString team);
 
@@ -30,7 +30,15 @@ public:
      * Metoda move() implementuje możliwość ruchu pionka na planszy szachowej.
      */
     void move();
+
+    /**
+     * @brief Awansowanie pionka na królową.
+     *
+     * Metoda promoteToQueen() umożliwia awansowanie pionka na królową po dotarciu do ostatniego rzędu planszy.
+     * Pionek zostaje zastąpiony przez figurę królowej.
+     */
     void promoteToQueen();
+
 };
 
 #endif // PAWN_H

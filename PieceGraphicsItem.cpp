@@ -1,6 +1,8 @@
 #include "PieceGraphicsItem.h"
 #include "Piece.h"
 #include "Game.h"
+#include "King.h"
+#include "Rook.h"
 
 extern Game *game;
 
@@ -30,17 +32,25 @@ void PieceGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     // wybranie danej figury
     if(!game->getPieceToMove()){
-
         game->setPieceToMove(chessPiece);
         game->getPieceToMove()->getCurrentBox()->getBoxGraphics()->setColor(Qt::green);
         game->getPieceToMove()->move();
     }
-    /* game->pieceToMove - to figura którą chcemy przesunąć, a 'this' to figura na którą aktualnie klikamy, jest to po prostu
+
+    /* game->pieceToMove - to figura którą chcemy przesunąć, a 'chessPiece' to figura na którą aktualnie klikamy, jest to po prostu
     mechanizm bicia, stąd kolory tych dwóch figur muszą być różne */
+
     else if(chessPiece->getSide() != game->getPieceToMove()->getSide()){
         chessPiece->getCurrentBox()->getBoxGraphics()->mousePressEvent(event);
     }
+
+    else if(chessPiece->getSide() == game->getPieceToMove()->getSide())
+    {
+        chessPiece->getCurrentBox()->getBoxGraphics()->mousePressEvent(event);
+    }
+
 }
+
 
 void PieceGraphicsItem::decolor()
 {
