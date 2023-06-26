@@ -107,11 +107,21 @@ public:
     ChessBoard *getChess();
 
     /**
-     * @brief Zamienia starą figurę na nową w kolekcji.
-     * \param oldPiece Wskaźnik na starą figurę.
-     * \param newPiece Wskaźnik na nową figurę.
+     * @brief Sprawdza, czy pole jest w szachu.
      */
-    void replacePieceInCollection(Piece *oldPiece, Piece *newPiece);
+    bool checkForCheck();
+
+    /**
+     * @brief Pobiera wartość flagi informującej czy jest szach.
+     * @return Wartość logiczna, czy jest szach.
+     */
+    bool getIsCheck();
+
+    /**
+     * @brief Ustawia wartość flagi informującej czy jest szach.
+     * \param val Wartość logiczna określająca, czy jest szach.
+     */
+    void setIsCheck(bool val);
 
     /**
      * @brief Kończy grę.
@@ -128,6 +138,7 @@ private:
     QList <Piece *> alivePiece; /**< Lista żywych figur. */
     ChessSquare *collection[N][N]; /**< Tablica reprezentująca pola szachowe. */
     ChessBoard *chess; /**< Wskaźnik na obiekt reprezentujący szachownicę. */
+    bool isCheck; /**< Flaga informująca, czy jest szach. */
 
 };
 

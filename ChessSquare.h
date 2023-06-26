@@ -107,11 +107,6 @@ public:
     void setBoxGraphics(ChessSquareGraphicsItem *boxG);
 
     /**
-     * @brief Sprawdza, czy pole jest w szachu.
-     */
-    void checkForCheck();
-
-    /**
      * @brief Kończy grę.
      */
     void gameOver();

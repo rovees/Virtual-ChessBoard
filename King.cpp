@@ -4,6 +4,7 @@
 #include "KingGraphics.h"
 #include "Rook.h"
 
+
 extern Game *game;
 
 King::King(QString team) : Piece(team)
@@ -109,10 +110,9 @@ void King::move()
             Rook* leftRook = dynamic_cast<Rook*>(leftRookPiece);
 
             if (leftRook && leftRook->getFirstMove()) {
-                // qDebug() << "CASTLE: " << getCanCastle();
                 setLongCastling(true);
                 for (int i = col - 1; i > 0; i--) {
-                    if (game->getCollection(row, i)->getHasChessPiece() || isLocationUnsafe(game->getCollection(row, i))) {
+                    if (game->getCollection(row, i)->getHasChessPiece() || isLocationUnsafe(game->getCollection(row, col - 2)) || game->getIsCheck()) {
                         setLongCastling(false);
                         break;
                     }
@@ -130,7 +130,7 @@ void King::move()
             if (rightRook && rightRook->getFirstMove()) {
                 setShortCastling(true);
                 for (int i = col + 1; i < 7; i++) {
-                    if (game->getCollection(row, i)->getHasChessPiece() || isLocationUnsafe(game->getCollection(row, i))) {
+                    if (game->getCollection(row, i)->getHasChessPiece() || isLocationUnsafe(game->getCollection(row, col + 2)) || game->getIsCheck()) {
                         setShortCastling(false);
                         break;
                     }
@@ -150,6 +150,7 @@ void King::move()
     findUnSafeLocation();
 
 }
+
 
 void King::setLongCastling(bool value)
 {
@@ -178,24 +179,23 @@ void King::findUnSafeLocation() {
     QList <ChessSquare *> delSquares;
 
     QList <Piece *> alivePiecesList = game->getAlivePiece();
-    for(size_t i = 0, n = alivePiecesList.size(); i < n; i++) {
+    for(size_t i = 0, n1 = alivePiecesList.size(); i < n1; i++) {
 
         if(alivePiecesList[i]->getSide() != this->getSide())
         {
-            Pawn *c = dynamic_cast<Pawn *> (alivePiecesList[i]);
+            Pawn *pawn = dynamic_cast<Pawn *> (alivePiecesList[i]);
 
-                if(c)
+                if(pawn)
                 {
-                    int PawnRow = c->getCurrentBox()->getRowPos();
-                    int PawnCol = c->getCurrentBox()->getColPos();
-                    for(size_t k = 0, n = location.size(); k < n; k++) {
-                        if(c->getSide() == "WHITE" && (location [k]== game->getCollection(PawnRow-1, PawnCol+1) || location [k] == game->getCollection(PawnRow-1, PawnCol-1)))
+                    int PawnRow = pawn->getCurrentBox()->getRowPos();
+                    int PawnCol = pawn->getCurrentBox()->getColPos();
+                    for(size_t k = 0, n2 = location.size(); k < n2; k++) {
+                        if(pawn->getSide() == "WHITE" && (location [k] == game->getCollection(PawnRow-1, PawnCol+1) || location [k] == game->getCollection(PawnRow-1, PawnCol-1)))
                         {
                             location[k]->getBoxGraphics()->setColor(Qt::darkMagenta);
                             delSquares.append(location[k]);
                         }
-                        else if (c->getSide() == "BLACK" && (location [k] == game->getCollection(PawnRow+1, PawnCol+1) || location [k]== game->getCollection(PawnRow+1, PawnCol-1)))
-
+                        else if (pawn->getSide() == "BLACK" && (location [k] == game->getCollection(PawnRow+1, PawnCol+1) || location [k]== game->getCollection(PawnRow+1, PawnCol-1)))
                         {
                             location[k]->getBoxGraphics()->setColor(Qt::red);
                             delSquares.append(location[k]);
@@ -208,11 +208,11 @@ void King::findUnSafeLocation() {
                 {
                     QList <ChessSquare *> moveLocationsList = alivePiecesList[i]->moveLocation();
 
-                    for(size_t j = 0, n = moveLocationsList.size(); j < n; j++)
+                    for(size_t j = 0, n3 = moveLocationsList.size(); j < n3; j++)
                     {
-                        for(size_t k = 0, n = location.size(); k < n; k++)
+                        for(size_t k = 0, n4 = location.size(); k < n4; k++)
                         {
-                            if(moveLocationsList[j] == location [k] &&  !(dynamic_cast<Pawn *> (alivePiecesList[i])))
+                            if(moveLocationsList[j] == location [k])
                             {
                                 if (this->getSide() == "WHITE")
                                 {
@@ -233,7 +233,7 @@ void King::findUnSafeLocation() {
         }
 
 
-    for (size_t i = 0, n = delSquares.size(); i < n; i++)
+    for (size_t i = 0, n5 = delSquares.size(); i < n5; i++)
         {
             location.removeOne(delSquares[i]);
         }
@@ -244,10 +244,10 @@ void King::findUnSafeLocation() {
 bool King::isLocationUnsafe(ChessSquare* square)
 {
     QList<Piece*> alivePiecesList = game->getAlivePiece();
-    for (size_t i = 0, n = alivePiecesList.size(); i < n; i++) {
+    for (size_t i = 0, n1 = alivePiecesList.size(); i < n1; i++) {
         if (alivePiecesList[i]->getSide() != this->getSide()) {
             QList<ChessSquare*> moveLocationsList = alivePiecesList[i]->moveLocation();
-            for (size_t j = 0, n = moveLocationsList.size(); j < n; j++) {
+            for (size_t j = 0, n2 = moveLocationsList.size(); j < n2; j++) {
                 if (moveLocationsList[j] == square) {
                     return true;
                 }
