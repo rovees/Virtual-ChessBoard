@@ -94,12 +94,13 @@ bool Game::checkForCheck()
     // iteracja przez żywe figury na szachownicy
     for(size_t i = 0, n1 = alivePiecesList.size(); i < n1; i++ ) {
         // rzutowanie aktualnej figury na króla
-        King *p = dynamic_cast <King *> (alivePiecesList[i]);
+        King *k = dynamic_cast <King *> (alivePiecesList[i]);
         // jezeli figura jest królem to przeskakujemy do następnego kroku pętli
-        if(p)
+        if(k)
         {
             continue;
         }
+
         alivePiecesList[i]->move();
         alivePiecesList[i]->getPieceGraphics()->decolor();
         // lista pól w które można się przesunąć daną figurą
