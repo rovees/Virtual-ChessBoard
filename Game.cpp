@@ -7,6 +7,7 @@
 #include "Queen.h"
 #include "Rook.h"
 #include <cmath>
+#include "Pawn.h"
 
 Game::Game()
 {
@@ -14,6 +15,7 @@ Game::Game()
     gameGraphics = new GameGraphics(nullptr, this);
     pieceToMove = nullptr;
     setTurn("WHITE");
+    moveCounter = 0;
 }
 
 Game::~Game()
@@ -159,6 +161,250 @@ void Game::gameOver()
 {
     getGameGraphics()->removeAll();
     alivePiece.clear();
+}
+
+int Game::getMoveCounter()
+{
+    return moveCounter;
+}
+
+void Game::setMoveCounter(int value)
+{
+    moveCounter = value;
+}
+
+void Game::incrementMoveCounter()
+{
+    moveCounter++;
+}
+
+void Game::performCastling(ChessSquareGraphicsItem *chessBoxGraphics)
+{
+
+    // rzutowanie zaznaczonej figury i figury na którą klikamy odpowiednio na króla i wieżę
+    King *k = dynamic_cast <King*> (getPieceToMove());
+    Rook *r = dynamic_cast <Rook*> (chessBoxGraphics->getCurrSquare()->getCurrentPiece());
+
+    qDebug() << "k: " << k;
+    qDebug() << "r: " << r;
+
+        if(k && r)
+        {
+            int kingRowPos = k->getCurrentBox()->getRowPos();
+            int kingColPos = k->getCurrentBox()->getColPos();
+            int rookRowPos = r->getCurrentBox()->getRowPos();
+            int rookColPos = r->getCurrentBox()->getColPos();
+
+            qDebug() << "king row: " << kingRowPos;
+            qDebug() << "king col: " << kingColPos;
+            qDebug() << "rook row: " << rookRowPos;
+            qDebug() << "rook col: " << rookColPos;
+
+            if (rookColPos == 0 && k->getLongCastling())
+            {
+                getPieceToMove()->getCurrentBox()->setHasChessPiece(false, nullptr);
+                getPieceToMove()->getCurrentBox()->setCurrentPiece(nullptr);
+                getPieceToMove()->getPieceGraphics()->decolor();
+                getPieceToMove()->getCurrentBox()->getBoxGraphics()->resetOriginalColor();
+                setPieceToMove(nullptr);
+                getGameGraphics()->changeTurn();
+
+                chessBoxGraphics->getCurrSquare()->setCurrentPiece(nullptr);
+                chessBoxGraphics->getCurrSquare()->setHasChessPiece(false, nullptr);
+
+
+                getCollection(kingRowPos, kingColPos - 2)->placePiece(k);
+                getCollection(rookRowPos, rookColPos + 3)->placePiece(r);
+                k->setLongCastling(false);
+                k->setFirstMove(false);
+                r->setFirstMove(false);
+
+                incrementMoveCounter();
+            }
+            else if (rookColPos == 7 && k->getShortCastling())
+            {
+                k->getCurrentBox()->setHasChessPiece(false, nullptr);
+
+                getPieceToMove()->getCurrentBox()->setHasChessPiece(false);
+                getPieceToMove()->getCurrentBox()->setCurrentPiece(nullptr);
+                getPieceToMove()->getPieceGraphics()->decolor();
+                getPieceToMove()->getCurrentBox()->getBoxGraphics()->resetOriginalColor();
+                setPieceToMove(nullptr);
+                getGameGraphics()->changeTurn();
+
+                chessBoxGraphics->getCurrSquare()->setCurrentPiece(nullptr);
+                chessBoxGraphics->getCurrSquare()->setHasChessPiece(false, nullptr);
+
+                getCollection(kingRowPos, kingColPos + 2)->placePiece(k);
+                getCollection(rookRowPos, rookColPos - 2)->placePiece(r);
+                k->setShortCastling(false);
+                k->setFirstMove(false);
+                r->setFirstMove(false);
+
+                incrementMoveCounter();
+            }
+        }
+}
+
+void Game::checkIfEnPassantPossible(ChessSquareGraphicsItem *chessBoxGraphics)
+{
+        // sprawdzenie czy będzie możliwe bicie w przelocie
+        Pawn *pawn = dynamic_cast<Pawn*> (getPieceToMove());
+        int pawnRow = getPieceToMove()->getCurrentBox()->getRowPos();
+        int currSquareRow = chessBoxGraphics->getCurrSquare()->getRowPos();
+        int currSquareCol = chessBoxGraphics->getCurrSquare()->getColPos();
+        Pawn *leftPawn = dynamic_cast<Pawn*> (getCollection(currSquareRow, currSquareCol-1)->getCurrentPiece());
+        Pawn *rightPawn = dynamic_cast<Pawn*> (getCollection(currSquareRow, currSquareCol+1)->getCurrentPiece());
+
+
+        if (pawn && abs(pawnRow - currSquareRow) == 2)
+        {
+            if (leftPawn && leftPawn->getSide() != pawn->getSide())
+            {
+                leftPawn->setEnPassantPossible(true);
+                setMoveCounter(0);
+            }
+
+            else if (rightPawn && rightPawn->getSide() != pawn->getSide())
+            {
+                rightPawn->setEnPassantPossible(true);
+                setMoveCounter(0);
+            }
+
+            qDebug() << "roznica: " << abs(pawnRow - currSquareRow);
+        }
+}
+
+void Game::performEnPassant(Pawn *pawnPerformingEnPassant, ChessSquareGraphicsItem *chessBoxGraphics)
+{
+        int currSquareRow = chessBoxGraphics->getCurrSquare()->getRowPos();
+        int currSquareCol = chessBoxGraphics->getCurrSquare()->getColPos();
+        int pawnRow = pawnPerformingEnPassant->getCurrentBox()->getRowPos();
+        int pawnCol = pawnPerformingEnPassant->getCurrentBox()->getColPos();
+
+        if (pawnPerformingEnPassant->getSide() == "WHITE")
+        {
+            // wykonanie bicia w przelocie
+            if ((chessBoxGraphics->getCurrSquare() == getCollection(pawnRow-1, pawnCol-1) && !getCollection(pawnRow-1, pawnCol-1)->getHasChessPiece())
+                || (chessBoxGraphics->getCurrSquare() == getCollection(pawnRow-1, pawnCol+1) && !getCollection(pawnRow-1, pawnCol+1)->getHasChessPiece()))
+            {
+                if (getMoveCounter() == 1)
+                {
+                    getGameGraphics()->placeInDeadPlace(getCollection(currSquareRow + 1, currSquareCol)->getCurrentPiece());
+                    getCollection(currSquareRow + 1, currSquareCol)->setHasChessPiece(false, nullptr);
+                    getCollection(currSquareRow + 1, currSquareCol)->setCurrentPiece(nullptr);
+                    getCollection(currSquareRow + 1, currSquareCol)->getBoxGraphics()->resetOriginalColor();
+                    chessBoxGraphics->getCurrSquare()->placePiece(pawnPerformingEnPassant);
+
+                    incrementMoveCounter();
+                    // sprawdzenie czy jest szach
+                    bool isCheck;
+                    isCheck = checkForCheck();
+                    setIsCheck(isCheck);
+
+                    setPieceToMove(nullptr);
+                    getGameGraphics()->changeTurn();
+                }
+            }
+
+            // wykonanie innego ruchu wynikająćego z możliwości piona w danej pozycji
+            else
+            {
+                if(chessBoxGraphics->getCurrSquare()->getHasChessPiece() && chessBoxGraphics->getCurrSquare()->getCurrentPiece()->getSide() != pawnPerformingEnPassant->getSide())
+                {
+                    chessBoxGraphics->getCurrSquare()->getCurrentPiece()->setIsPlaced(false);
+                    chessBoxGraphics->getCurrSquare()->getCurrentPiece()->setCurrentBox(nullptr);
+                    King *k = dynamic_cast<King *> (chessBoxGraphics->getCurrSquare()->getCurrentPiece());
+
+                    if (k)
+                    {
+                    getGameGraphics()->setWinner(pawnPerformingEnPassant->getSide());
+                    gameOver();
+                    getGameGraphics()->displayWinner(getGameGraphics()->getWinner());
+                    }
+
+                    getGameGraphics()->placeInDeadPlace(chessBoxGraphics->getCurrSquare()->getCurrentPiece());
+                }
+
+                // resetowanie pola, na którym znajdowała się figura
+                pawnPerformingEnPassant->getCurrentBox()->setHasChessPiece(false, nullptr);
+                pawnPerformingEnPassant->getCurrentBox()->setCurrentPiece(nullptr);
+                pawnPerformingEnPassant->getCurrentBox()->getBoxGraphics()->resetOriginalColor();
+
+                chessBoxGraphics->getCurrSquare()->placePiece(pawnPerformingEnPassant);
+                incrementMoveCounter();
+
+                // sprawdzenie czy jest szach
+                bool isCheck;
+                isCheck = checkForCheck();
+                setIsCheck(isCheck);
+
+                setPieceToMove(nullptr);
+                getGameGraphics()->changeTurn();
+            }
+        }
+
+        else if (pawnPerformingEnPassant->getSide() == "BLACK")
+        {
+            // wykonanie bicia w przelocie
+            if ((chessBoxGraphics->getCurrSquare() == getCollection(pawnRow+1, pawnCol-1) && !getCollection(pawnRow+1, pawnCol-1)->getHasChessPiece())
+                || (chessBoxGraphics->getCurrSquare() == getCollection(pawnRow+1, pawnCol+1) && !getCollection(pawnRow+1, pawnCol+1)->getHasChessPiece()))
+            {
+                if (getMoveCounter() == 1)
+                {
+                    getGameGraphics()->placeInDeadPlace(getCollection(currSquareRow - 1, currSquareCol)->getCurrentPiece());
+                    getCollection(currSquareRow - 1, currSquareCol)->setHasChessPiece(false, nullptr);
+                    getCollection(currSquareRow - 1, currSquareCol)->setCurrentPiece(nullptr);
+                    getCollection(currSquareRow - 1, currSquareCol)->getBoxGraphics()->resetOriginalColor();
+                    chessBoxGraphics->getCurrSquare()->placePiece(pawnPerformingEnPassant);
+                    incrementMoveCounter();
+
+                    // sprawdzenie czy jest szach
+                    bool isCheck;
+                    isCheck = checkForCheck();
+                    setIsCheck(isCheck);
+
+                    setPieceToMove(nullptr);
+                    getGameGraphics()->changeTurn();
+                }
+            }
+
+            // wykonanie innego ruchu wynikająćego z możliwości piona w danej pozycji
+            else
+            {
+                if(chessBoxGraphics->getCurrSquare()->getHasChessPiece() && chessBoxGraphics->getCurrSquare()->getCurrentPiece()->getSide() != pawnPerformingEnPassant->getSide())
+                {
+                    chessBoxGraphics->getCurrSquare()->getCurrentPiece()->setIsPlaced(false);
+                    chessBoxGraphics->getCurrSquare()->getCurrentPiece()->setCurrentBox(nullptr);
+                    King *k = dynamic_cast<King *> (chessBoxGraphics->getCurrSquare()->getCurrentPiece());
+
+                    if (k)
+                    {
+                    getGameGraphics()->setWinner(pawnPerformingEnPassant->getSide());
+                    gameOver();
+                    getGameGraphics()->displayWinner(getGameGraphics()->getWinner());
+                    }
+
+                    getGameGraphics()->placeInDeadPlace(chessBoxGraphics->getCurrSquare()->getCurrentPiece());
+                }
+
+                // resetowanie pola, na którym znajdowała się figura
+                pawnPerformingEnPassant->getCurrentBox()->setHasChessPiece(false, nullptr);
+                pawnPerformingEnPassant->getCurrentBox()->setCurrentPiece(nullptr);
+                pawnPerformingEnPassant->getCurrentBox()->getBoxGraphics()->resetOriginalColor();
+
+                chessBoxGraphics->getCurrSquare()->placePiece(pawnPerformingEnPassant);
+                incrementMoveCounter();
+
+                // sprawdzenie czy jest szach
+                bool isCheck;
+                isCheck = checkForCheck();
+                setIsCheck(isCheck);
+
+                setPieceToMove(nullptr);
+                getGameGraphics()->changeTurn();
+            }
+        }
 }
 
 

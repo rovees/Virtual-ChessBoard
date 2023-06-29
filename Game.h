@@ -9,7 +9,7 @@ const static int N = 8;
 
 class GameGraphics;
 class Piece;
-
+class Pawn;
 
 /**
  * @brief Klasa reprezentująca grę szachową.
@@ -128,6 +128,42 @@ public:
      */
     void gameOver();
 
+
+    /**
+     * @brief pobiera liczbę wykonanych ruchów
+     * @return zwraca liczbę wykonanych ruchów
+     */
+    int getMoveCounter();
+
+    /**
+     * @brief ustawia liczbe ruchów
+     * @param value Wartość do ustawienia licznika ruchów
+     */
+    void setMoveCounter(int value);
+
+    /**
+     * @brief inkrementuje licznik ruchów o 1
+     */
+    void incrementMoveCounter();
+
+    /**
+     * @brief obsługuje wykonanie roszady
+     * @param chessBoxGraphics wskaźnik na element graficzny odpowiadający polu szachowemu na które klikamy
+     */
+    void performCastling(ChessSquareGraphicsItem *chessBoxGraphics);
+
+    /**
+     * @brief Sprawdza czy można wykonać bicie w przelocie w następnym ruchu
+     * @param chessBoxGraphics wskaźnik na element graficzny odpowiadający polu szachowemu na które klikamy
+     */
+    void checkIfEnPassantPossible(ChessSquareGraphicsItem *chessBoxGraphics);
+
+    /**
+     * @brief obsługuje wykonanie bicia w przelocie lub zwykły ruch pionka wynikający z możliwości pionka w pozycji gdzie jest możliwe wykonanie bicia w przelocie
+     * @param pawnPerformingEnPassant wskaźnik na pionek który ma możliwość wykonania bicia w przelocie
+     * @param chessBoxGraphics wskaźnik na element graficzny odpowiadający polu szachowemu na które klikamy
+     */
+    void performEnPassant(Pawn *pawnPerformingEnPassant, ChessSquareGraphicsItem *chessBoxGraphics);
 private:
 
     GameGraphics *gameGraphics; /**< Wskaźnik na obiekt graficzny reprezentujący grę. */
@@ -139,6 +175,7 @@ private:
     ChessSquare *collection[N][N]; /**< Tablica reprezentująca pola szachowe. */
     ChessBoard *chess; /**< Wskaźnik na obiekt reprezentujący szachownicę. */
     bool isCheck; /**< Flaga informująca, czy jest szach. */
+    int moveCounter; /**< Licznik kolejno wykonywanych ruchów */
 
 };
 

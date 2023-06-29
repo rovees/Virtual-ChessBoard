@@ -1,5 +1,4 @@
 #include "Pawn.h"
-#include "Game.h"
 #include <QDebug>
 #include <typeinfo>
 #include "King.h"
@@ -13,6 +12,7 @@ Pawn::Pawn(QString team) : Piece(team)
 {
     pieceGraphics = new PawnGraphics(nullptr, this);
     firstMove = true;
+    enPassantPossible = false;
 }
 
 Pawn::~Pawn()
@@ -48,6 +48,32 @@ void Pawn::move()
             }
         }
 
+        // Sprawdzenie możliwości bicia w przelocie w lewo
+        if (row == 3 && col > 0 && game->getCollection(row, col - 1)->getHasChessPiece() && game->getMoveCounter() == 1) {
+            Piece *leftPiece = game->getCollection(row, col - 1)->getCurrentPiece();
+
+            if (dynamic_cast<Pawn *>(leftPiece) && leftPiece->getSide() == "BLACK") {
+
+                if (this->getEnPassantPossible()) {
+                    location.append(game->getCollection(row - 1, col - 1));
+                    boxSetting(location.last());
+                }
+            }
+        }
+
+        // Sprawdzenie możliwości bicia w przelocie w prawo
+        if (row == 3 && col < 7 && game->getCollection(row, col + 1)->getHasChessPiece() && game->getMoveCounter() == 1) {
+            Piece *rightPiece = game->getCollection(row, col + 1)->getCurrentPiece();
+
+            if (dynamic_cast<Pawn *>(rightPiece) && rightPiece->getSide() == "BLACK") {
+
+                if (this->getEnPassantPossible()) {
+                    location.append(game->getCollection(row - 1, col + 1));
+                    boxSetting(location.last());
+                }
+            }
+        }
+
 
     }
     else{
@@ -69,7 +95,34 @@ void Pawn::move()
             }
 
         }
+
+        // Sprawdzenie możliwości bicia w przelocie w lewo
+        if (row == 4 && col > 0 && game->getCollection(row, col - 1)->getHasChessPiece() && game->getMoveCounter() == 1) {
+            Piece *leftPiece = game->getCollection(row, col - 1)->getCurrentPiece();
+
+            if (dynamic_cast<Pawn *>(leftPiece) && leftPiece->getSide() == "WHITE") {
+
+                if (this->getEnPassantPossible()) {
+                    location.append(game->getCollection(row + 1, col - 1));
+                    boxSetting(location.last());
+                }
+            }
+        }
+
+        // Sprawdzenie możliwości bicia w przelocie w prawo
+        if (row == 4 && col < 7 && game->getCollection(row, col + 1)->getHasChessPiece() && game->getMoveCounter() == 1) {
+            Piece *rightPiece = game->getCollection(row, col + 1)->getCurrentPiece();
+
+            if (dynamic_cast<Pawn *>(rightPiece) && rightPiece->getSide() == "WHITE") {
+
+                if (this->getEnPassantPossible()) {
+                    location.append(game->getCollection(row + 1, col + 1));
+                    boxSetting(location.last());
+                }
+            }
+        }
     }
+
     promoteToQueen();
 
 }
@@ -101,4 +154,17 @@ void Pawn::promoteToQueen()
 
     }
 }
+
+bool Pawn::getEnPassantPossible()
+{
+    return enPassantPossible;
+}
+
+void Pawn::setEnPassantPossible(bool value)
+{
+    enPassantPossible = value;
+}
+
+
+
 

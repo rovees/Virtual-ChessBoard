@@ -32,6 +32,18 @@ public:
     void move();
 
     /**
+     * @brief pobiera flage czy mozna wykonać bicie w przelocie danym pionkiem
+     * @return zwraca wartość logiczną czy można wykonać bicie w przelocie danym pionkiem
+     */
+    bool getEnPassantPossible();
+
+    /**
+     * @brief ustawienie wartości flagi informującej czy dany pionek może wykonać bicie w przelocie
+     * @param val wartość logiczna do ustawienia atrybutu enPassantPossible
+     */
+    void setEnPassantPossible(bool val);
+
+    /**
      * @brief Awansowanie pionka na królową.
      *
      * Metoda promoteToQueen() umożliwia awansowanie pionka na królową po dotarciu do ostatniego rzędu planszy.
@@ -39,6 +51,9 @@ public:
      */
     void promoteToQueen();
 
+
+private:
+    bool enPassantPossible; /**< Flaga informująca czy można wykonać bicie w przelocie danym pionkiem */
 };
 
 #endif // PAWN_H
