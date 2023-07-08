@@ -18,11 +18,10 @@ GameGraphics::GameGraphics(QWidget *parent, Game *g) : QGraphicsView(parent)
     brush.setStyle(Qt::SolidPattern);
     brush.setColor(Qt::black);
     setBackgroundBrush(brush);
-    // pieceToMove = nullptr;
 
     // wyswietlanie aktualnej tury
     turnDisplay = new QGraphicsTextItem();
-    turnDisplay->setPos(width()/2-0.8*100,0.8*10);
+    turnDisplay->setPos(width()/2-0.8*100, 0.8*10);
     turnDisplay->setZValue(1);
     turnDisplay->setDefaultTextColor(Qt::white);
     turnDisplay->setFont(QFont("",0.8*18));
@@ -36,23 +35,28 @@ GameGraphics::GameGraphics(QWidget *parent, Game *g) : QGraphicsView(parent)
     check->setFont(QFont("",0.8*18));
     check->setPlainText("CHECK!");
     check->setVisible(false);
-    // setTurn("WHITE");
 }
 
+GameGraphics::~GameGraphics()
+{
+
+}
 
 Game *GameGraphics::getGameLogic()
 {
     return gameLogic;
 }
 
+QGraphicsScene *GameGraphics::getGameScene()
+{
+    return gameScene;
+}
 
 void GameGraphics::drawChessBoard()
 {
-    // chess = new ChessBoard();
     drawDeadHolder(0,0,Qt::lightGray);
     drawDeadHolder(0.8*1100,0,Qt::lightGray);
     gameLogic->getChess()->drawBoxes(width()/2-0.8*400,0.8*50);
-
 }
 
 void GameGraphics::displayDeadWhite()
@@ -66,7 +70,7 @@ void GameGraphics::displayDeadWhite()
             j = 0;
         }
         j++;
-        gameLogic->getWhiteDead()[i]->getPieceGraphics()->setPos(0.8*40+SHIFT*j,0.8*100+SHIFT*2*k);
+        gameLogic->getWhiteDead()[i]->getPieceGraphics()->setPos(0.8*40+SHIFT*j, 0.8*100+SHIFT*2*k);
     }
 }
 
@@ -105,15 +109,12 @@ void GameGraphics::placeInDeadPlace(Piece *piece)
 
 void GameGraphics::addToScene(QGraphicsItem *item)
 {
-    qDebug() << item;
-
     gameScene->addItem(item);
 }
 
 void GameGraphics::removeFromScene(QGraphicsItem *item)
 {
     gameScene->removeItem(item);
-
 }
 
 void GameGraphics::changeTurn()
@@ -127,8 +128,8 @@ void GameGraphics::changeTurn()
 
 void GameGraphics::start()
 {
-    for(size_t i = 0, n = listG.size(); i < n; i++)
-        removeFromScene(listG[i]);
+    for(size_t i = 0, n = listGraphicsItems.size(); i < n; i++)
+        removeFromScene(listGraphicsItems[i]);
 
     addToScene(turnDisplay);
     QGraphicsTextItem *whitePiece = new QGraphicsTextItem();
@@ -171,26 +172,48 @@ void GameGraphics::displayMainMenu()
     int yPos = 0.8*150;
     titleText->setPos(xPos,yPos);
     addToScene(titleText);
-    listG.append(titleText);
+    listGraphicsItems.append(titleText);
 
     // utworzenie przycisku
-    Button * playButton = new Button("Play");
+    Button *playButton = new Button("Play");
     int pxPos = width()/2 - playButton->boundingRect().width()/2;
     int pyPos = 0.8*300;
     playButton->setPos(pxPos,pyPos);
     connect(playButton, SIGNAL(clicked()) , this, SLOT(start()));
     addToScene(playButton);
-    listG.append(playButton);
+    listGraphicsItems.append(playButton);
 
     // utworzenie przycisku wyjścia z aplikacji
-    Button * quitButton = new Button("Quit");
+    Button *quitButton = new Button("Quit");
     int qxPos = width()/2 - quitButton->boundingRect().width()/2;
-    int qyPos = 0.8*375;
+    int qyPos = 0.45 * height();
     quitButton->setPos(qxPos, qyPos);
+    qDebug() << "Height(): " << height();
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
     addToScene(quitButton);
     drawChessBoard();
-    listG.append(quitButton);
+    listGraphicsItems.append(quitButton);
+}
+
+void GameGraphics::setWinner(QString winnerColor)
+{
+    winner = winnerColor;
+}
+
+QString GameGraphics::getWinner()
+{
+    return winner;
+}
+
+void GameGraphics::displayWinner(QString winColor)
+{
+    QGraphicsTextItem *Winner = new QGraphicsTextItem();
+    Winner->setDefaultTextColor(Qt::red);
+    Winner->setPos(0.3*1400, 0.3*900);
+    Winner->setPlainText(winColor + " WON");
+    QFont winnerFont("arial", 0.8*50);
+    Winner->setFont(winnerFont);
+    addToScene(Winner);
 }
 
 void GameGraphics::setTurnDisplay(QString value)
@@ -201,7 +224,6 @@ void GameGraphics::setTurnDisplay(QString value)
 void GameGraphics::removeAll(){
     QList<QGraphicsItem*> itemsList = gameScene->items();
     for(size_t i = 0, n = itemsList.size(); i < n; i++) {
-        // if(itemsList[i] != check)
         removeFromScene(itemsList[i]);
     }
 }

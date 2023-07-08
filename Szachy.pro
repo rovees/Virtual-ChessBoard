@@ -16,6 +16,7 @@ SOURCES += \
     ChessSquare.cpp \
     ChessSquareGraphicsItem.cpp \
     Game.cpp \
+    GameGraphics.cpp \
     King.cpp \
     KingGraphics.cpp \
     Knight.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     ChessSquare.h \
     ChessSquareGraphicsItem.h \
     Game.h \
+    GameGraphics.h \
     King.h \
     King.h \
     KingGraphics.h \

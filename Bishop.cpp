@@ -1,33 +1,19 @@
 #include "Bishop.h"
 #include <QDebug>
-#include "Game.h"
 #include "BishopGraphics.h"
 
 
 extern Game *game;
 
-Bishop::Bishop(QString team) : Piece(team) //,QGraphicsItem *parent) : Piece(team, parent)
+Bishop::Bishop(QString team) : Piece(team)
 {
     pieceGraphics = new BishopGraphics(nullptr, this);
-    // pieceGraphics->setChessPiece(this);
-    // this->pieceGraphics->setImage();
-    // setImage();
 }
 
 Bishop::~Bishop()
 {
-
+    delete pieceGraphics;
 }
-
-/*
-void Bishop::setImage()
-{
-    if(side == "WHITE")
-        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/white_bishop.png"));
-    else
-        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_bishop.png"));
-}
-*/
 
 void Bishop::move()
 {

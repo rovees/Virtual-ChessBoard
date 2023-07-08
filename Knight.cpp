@@ -5,30 +5,20 @@
 
 extern Game *game;
 
-Knight::Knight(QString team) : Piece(team) //,parent)
+Knight::Knight(QString team) : Piece(team)
 {
     pieceGraphics = new KnightGraphics(nullptr, this);
-    //setImage();
 }
 
 Knight::~Knight()
 {
-
+    delete pieceGraphics;
 }
-
-/*
-void Knight::setImage()
-{
-    if(side == "WHITE")
-        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/white_knight.png"));
-    else
-        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_knight.png"));
-}
-*/
 
 
 void Knight::move()
 {
+    location.clear();
     int row = this->getCurrentBox()->getRowPos();
     int col = this->getCurrentBox()->getColPos();
     int i ,j;

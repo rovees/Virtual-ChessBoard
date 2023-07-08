@@ -4,6 +4,7 @@
 #include "Piece.h"
 #include "Game.h"
 
+
 /**
  * @brief Klasa reprezentująca figurę gońca.
  *

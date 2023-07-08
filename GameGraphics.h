@@ -25,6 +25,11 @@ public:
     GameGraphics(QWidget *parent = nullptr, Game *g = nullptr);
 
     /**
+     * @brief Destruktor klasy GameGraphics.
+     */
+    ~GameGraphics();
+
+    /**
      * @brief Zwraca wskaźnik na obiekt logiki gry.
      * @return Wskaźnik na obiekt Game.
      */

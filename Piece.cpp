@@ -18,36 +18,6 @@ Piece::~Piece()
 
 }
 
-/*
-void Piece::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    // odznaczanie wybranej figury
-    if(this == game->getPieceToMove()){
-        game->getPieceToMove()->getCurrentBox()->getBoxGraphics()->resetOriginalColor();
-        game->getPieceToMove()->getPieceGraphics()->decolor();
-        game->setPieceToMove(nullptr);
-        return;
-    }
-
-    // jeżeli figura została zbita oraz zapobieganie możliwości poruszania się figurą, której kolor nie odpowiada aktualnej turze
-    if((!getIsPlaced()) || ((game->getTurn() != this->getSide()) && (!game->getPieceToMove())))
-        return;
-
-    // wybranie danej figury
-    if(!game->getPieceToMove()){
-
-        game->setPieceToMove(this);
-        game->getPieceToMove()->getCurrentBox()->getBoxGraphics()->setColor(Qt::green);
-        game->getPieceToMove()->move();
-    }
-    game->pieceToMove - to figura którą chcemy przesunąć, a 'this' to figura na którą aktualnie klikamy, jest to po prostu
-    mechanizm bicia, stąd kolory tych dwóch figur muszą być różne
-    else if(this->getSide() != game->getPieceToMove()->getSide()){
-        this->getCurrentBox()->getBoxGraphics()->mousePressEvent(event);
-    }
-}
-*/
-
 void Piece::setCurrentBox(ChessSquare *box)
 {
     currentBox = box;
@@ -83,14 +53,6 @@ QList<ChessSquare *> Piece::moveLocation()
     return location;
 }
 
-/*
-void Piece::decolor()
-{
-    for(int i = 0, n = location.size(); i < n;i++) {
-        location[i]->getBoxGraphics()->resetOriginalColor();
-    }
-}
-*/
 
 void Piece::setFirstMove(bool value)
 {
@@ -105,9 +67,11 @@ bool Piece::getFirstMove()
 bool Piece::boxSetting(ChessSquare *box)
 
 {
-    if(box->getHasChessPiece()) {
-        King *q = dynamic_cast<King*>(location.last()->getCurrentPiece());
-        if(q){
+    if(box->getHasChessPiece())
+    {
+        King *k = dynamic_cast<King*>(box->getCurrentPiece());
+        if(k)
+        {
             box->getBoxGraphics()->setColor(Qt::blue);
         }
         else
@@ -115,7 +79,7 @@ bool Piece::boxSetting(ChessSquare *box)
         return true;
     }
     else
-        location.last()->getBoxGraphics()->setColor(Qt::darkGreen);
+        box->getBoxGraphics()->setColor(Qt::darkGreen);
     return false;
 }
 

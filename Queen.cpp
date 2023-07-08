@@ -4,26 +4,15 @@
 
 extern Game *game;
 
-Queen::Queen(QString team) : Piece(team) //,parent)
+Queen::Queen(QString team) : Piece(team)
 {
     pieceGraphics = new QueenGraphics(nullptr, this);
-    // setImage();
 }
 
 Queen::~Queen()
 {
-
+    delete pieceGraphics;
 }
-
-/*
-void Queen::setImage()
-{
-    if(side == "WHITE")
-        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/white_queen.png"));
-    else
-        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_queen.png"));
-}
-*/
 
 void Queen::move()
 {

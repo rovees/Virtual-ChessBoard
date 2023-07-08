@@ -1,5 +1,5 @@
 #include "ChessSquare.h"
-// #include "ChessBoard.h"
+#include "ChessBoard.h"
 #include "Queen.h"
 #include "Rook.h"
 #include "Pawn.h"
@@ -24,7 +24,7 @@ ChessBoard::~ChessBoard()
 
 }
 
-void ChessBoard::drawBoxes(int x,int y)
+void ChessBoard::drawBoxes(int x, int y)
 {
     int SHIFT = 0.8*100;
     for(int i = 0; i < 8; i++) {
@@ -120,35 +120,3 @@ void ChessBoard::setUpBlack()
     }
 }
 
-
-void ChessBoard::reset() {
-    int k = 0; int h = 0;
-    for(int i = 0; i < 8; i++) {
-        for(int j = 0; j < 8; j++)
-        {
-
-            ChessSquare *box = game->getCollection(i, j);
-            box->setHasChessPiece(false);
-            box->setChessPieceColor("NONE");
-            box->setCurrentPiece(nullptr);
-            if(i < 2) {
-
-                box->placePiece(black[k]);
-                black[k]->setIsPlaced(true);
-                black[k]->setFirstMove(true);
-                game->getAlivePiece().append(black[k++]);
-
-            }
-            if(i > 5) {
-
-                box->placePiece(white[h]);
-                white[h]->setIsPlaced(true);
-                white[h]->setFirstMove(true);
-                game->getAlivePiece().append(white[h++]);
-
-            }
-
-        }
-    }
-    // game->setTurnDisplay("Turn: WHITE");
-}

@@ -74,6 +74,8 @@ void King::move()
         boxSetting(location.last());
     }
 
+    findUnSafeLocation();
+
     // Roszada
     qDebug() << "First move: " << firstMove;
     if (firstMove) {
@@ -87,7 +89,7 @@ void King::move()
             if (leftRook && leftRook->getFirstMove()) {
                 setLongCastling(true);
                 for (int i = col - 1; i > 0; i--) {
-                    if (game->getCollection(row, i)->getHasChessPiece() || isLocationUnsafe(game->getCollection(row, col - 2)) || game->getIsCheck()) {
+                    if (game->getCollection(row, i)->getHasChessPiece() || isLocationUnsafe(game->getCollection(row, col - 2))) {
                         setLongCastling(false);
                         break;
                     }
@@ -105,7 +107,7 @@ void King::move()
             if (rightRook && rightRook->getFirstMove()) {
                 setShortCastling(true);
                 for (int i = col + 1; i < 7; i++) {
-                    if (game->getCollection(row, i)->getHasChessPiece() || isLocationUnsafe(game->getCollection(row, col + 2)) || game->getIsCheck()) {
+                    if (game->getCollection(row, i)->getHasChessPiece() || isLocationUnsafe(game->getCollection(row, col + 2))) {
                         setShortCastling(false);
                         break;
                     }
@@ -120,7 +122,6 @@ void King::move()
 
     qDebug() << "Long castling: " << longCastling;
     qDebug() << "Short castling: " << shortCastling;
-    findUnSafeLocation();
 
 }
 
@@ -192,7 +193,6 @@ void King::findUnSafeLocation() {
                                 {
                                     location[k]->getBoxGraphics()->setColor(Qt::red);
                                     unsafeLocations.append(location[k]);
-
                                 }
                                 else if (this->getSide() == "BLACK")
                                 {
@@ -217,11 +217,15 @@ void King::findUnSafeLocation() {
 bool King::isLocationUnsafe(ChessSquare* square)
 {
     QList<Piece*> alivePiecesList = game->getAlivePiece();
-    for (size_t i = 0, n1 = alivePiecesList.size(); i < n1; i++) {
-        if (alivePiecesList[i]->getSide() != this->getSide()) {
+    for (size_t i = 0, n1 = alivePiecesList.size(); i < n1; i++)
+    {
+        if (alivePiecesList[i]->getSide() != this->getSide())
+            {
             QList<ChessSquare*> moveLocationsList = alivePiecesList[i]->moveLocation();
-            for (size_t j = 0, n2 = moveLocationsList.size(); j < n2; j++) {
-                if (moveLocationsList[j] == square) {
+            for (size_t j = 0, n2 = moveLocationsList.size(); j < n2; j++)
+            {
+                if (moveLocationsList[j] == square)
+                {
                     return true;
                 }
             }

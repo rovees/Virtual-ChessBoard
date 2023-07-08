@@ -89,7 +89,6 @@ void ChessSquare::setBoxGraphics(ChessSquareGraphicsItem *boxG)
     boxGraphics = boxG;
 }
 
-
 ChessSquareGraphicsItem *ChessSquare::getBoxGraphics()
 {
     return boxGraphics;

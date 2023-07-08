@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "King.h"
 #include "Rook.h"
+#include "Pawn.h"
 
 extern Game *game;
 
@@ -34,7 +35,7 @@ void PieceGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if(!game->getPieceToMove()){
         game->setPieceToMove(chessPiece);
         game->getPieceToMove()->getCurrentBox()->getBoxGraphics()->setColor(Qt::green);
-        game->getPieceToMove()->move();
+        game->getPieceToMove()->move();        
     }
 
     /* game->pieceToMove - to figura którą chcemy przesunąć, a 'chessPiece' to figura na którą aktualnie klikamy, jest to po prostu

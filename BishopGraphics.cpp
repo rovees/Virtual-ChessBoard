@@ -1,8 +1,7 @@
 #include "BishopGraphics.h"
 
-BishopGraphics::BishopGraphics(QGraphicsItem *parent, Piece *p) : PieceGraphicsItem(parent)
+BishopGraphics::BishopGraphics(QGraphicsItem *parent, Piece *p) : PieceGraphicsItem(parent, p)
 {
-    chessPiece = p;
     setImage();
 }
 
@@ -14,7 +13,7 @@ BishopGraphics::~BishopGraphics()
 void BishopGraphics::setImage()
 {
     if(chessPiece->getSide() == "WHITE")
-        setPixmap(QPixmap("C:/Users/Radek/Documents/SZASZKI/white_bishop.png"));
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/white_bishop.png"));
     else
-        setPixmap(QPixmap("C:/Users/Radek/Documents/SZASZKI/black_bishop.png"));
+        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_bishop.png"));
 }

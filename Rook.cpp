@@ -5,26 +5,16 @@
 
 extern Game *game;
 
-Rook::Rook(QString team) : Piece(team) //,parent)
+Rook::Rook(QString team) : Piece(team)
 {
     pieceGraphics = new RookGraphics(nullptr, this);
-    // setImage();
+    firstMove = true;
 }
 
 Rook::~Rook()
 {
-
+    delete pieceGraphics;
 }
-
-/*
-void Rook::setImage()
-{
-    if(side == "WHITE")
-        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/white_rook.png"));
-    else
-        setPixmap(QPixmap("C:/Users/Radek/Desktop/Projekt_szachy/Szachy/black_rook.png"));
-}
-*/
 
 void Rook::move()
 {
@@ -87,4 +77,5 @@ void Rook::move()
         }
 
     }
+    qDebug() << firstMove;
 }
